@@ -1,0 +1,75 @@
+{
+	"type": "origins:multiple",
+	"name": "Origins: Math - test",
+	"description": "test power for origins math stuff",
+
+	"healing_gauge": {
+		"type": "origins:resource",
+		"hud_render": {
+			"sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_01.png",
+			"bar_index": 1,
+			"should_render": true
+		},
+		"min": 0,
+		"max": 7
+	},
+
+	"increase_gauge": {
+		"type": "origins:active_self",
+		"key": "key.origins.secondary_active",
+		"entity_action": {
+			"type": "origins:if_else",
+			"condition": {
+				"type": "origins:sneaking",
+				"inverted": true
+			},
+			"if_action": {
+				"type": "origins:change_resource",
+				"resource": "*:*_healing_gauge",
+				"change": 1,
+				"operation": "add"
+			},
+			"else_action": {
+				"type": "origins:change_resource",
+				"resource": "*:*_healing_gauge",
+				"change": -1,
+				"operation": "add"
+			}
+		}
+	},
+
+	"heal": {
+		"type": "origins:active_self",
+		"key": "key.origins.primary_active",
+		"cooldown": 40,
+		"hud_render": {
+			"sprite_location": "origins:textures/gui/community/spiderkolo/resource_bar_03.png",
+			"bar_index": 9,
+			"should_render": true
+		},
+		"entity_action": {
+			"type": "origins-math:heal",
+			"amount": "*:*_healing_gauge"
+		}
+	},
+
+	"display": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins-math:variable_execute_command",
+			"command": "title @s actionbar [{\"text\": \"You currently have: \"}, { \"text\": \"$:healing_gauge\" }, { \"text\": \" of *:*_healing_gauge\" }]",
+			"variables": {
+				"healing_gauge": "*:*_healing_gauge"
+			}
+		}
+	},
+
+	"imagine_mathematics": {
+		"type": "origins-math:math_resource",
+		"expression": "healing * 1.5",
+		"variables": {
+			"healing": "*:*_healing_gauge"
+		}
+	}
+}

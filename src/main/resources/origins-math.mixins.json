@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"package": "io.github.xrickastley.originsmath.mixins",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"ActionFactoryAccessor",
+		"ConditionFactoryAccessor",
+		"PowerFactoryAccessor",
+		"SerializableDataAccessor",
+		"SerializableDataFieldAccessor",
+		"SerializableDataInstanceMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

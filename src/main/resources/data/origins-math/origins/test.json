@@ -1,0 +1,8 @@
+{
+	"icon": "minecraft:command_block",
+	"name": "test",
+	"description": "test. what else??",
+	"powers": [
+		"origins-math:test"
+	]
+}

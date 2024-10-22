@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "origins-math",
+	"version": "1.0.2",
+	"name": "Origins: Math",
+	"description": "Adds the capability for you to use math for your Origin powers, as well as enhancing the current capabilities of Resource powers.",
+	"authors": [
+		"_xRickAstley"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/origins-math",
+		"sources": "https://github.com/xrickastley/origins-math",
+		"issues": "https://github.com/xrickastley/origins-math/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/origins-math/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"io.github.xrickastley.originsmath.OriginsMath"
+		],
+		"mm:early_risers": [
+			"io.github.xrickastley.originsmath.EarlyRiser"
+		]
+	},
+	"mixins": [
+		"origins-math.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.12.3",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+		"origins": ">=1.10.0"
+	}
+}

@@ -25,7 +25,7 @@ public abstract class LinkedVariableIntPower extends VariableIntPower {
 	 * must be returned.
 	 * @return The linked value of this {@code LinkedVariableIntPower}.
 	 */
-	protected abstract	 int supplyValue();
+	protected abstract int supplyValue();
 
 	/**
 	 * Gets the value of this {@code LinkedVariableIntPower}. This more-precise value is 

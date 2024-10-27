@@ -83,6 +83,7 @@ loom {
 		}
 	}
 
+	accessWidenerPath = file("src/main/resources/origins-math.accesswidener")
 }
 
 dependencies {
@@ -105,8 +106,7 @@ dependencies {
 		exclude (group: "net.fabricmc.fabric-api")
 	}
 
-	include implementation ('org.mariuszgromada.math:MathParser.org-mXparser:6.0.0')
-	
+	include modImplementation ('org.mariuszgromada.math:MathParser.org-mXparser:6.0.0')
 }
 
 processResources {

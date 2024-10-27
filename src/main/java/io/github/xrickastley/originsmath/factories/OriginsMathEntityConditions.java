@@ -17,8 +17,10 @@ public class OriginsMathEntityConditions {
 			.info("Registered all base entity conditions!");
 	}
 
-	private static ConditionFactory<Entity> register(ConditionFactory<Entity> actionFactory) {
-		return Registry.register(ApoliRegistries.ENTITY_CONDITION, actionFactory.getSerializerId(), actionFactory);
+	private static ConditionFactory<Entity> register(ConditionFactory<Entity> conditionFactory) {
+		if (ApoliRegistries.ENTITY_CONDITION.containsId(conditionFactory.getSerializerId())) return ApoliRegistries.ENTITY_CONDITION.get(conditionFactory.getSerializerId());
+
+		return Registry.register(ApoliRegistries.ENTITY_CONDITION, conditionFactory.getSerializerId(), conditionFactory);
 	}
 	
 }

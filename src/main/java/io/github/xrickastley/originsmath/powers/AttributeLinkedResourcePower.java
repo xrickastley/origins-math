@@ -8,7 +8,6 @@ import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataType;
 import io.github.apace100.calio.data.SerializableDataTypes;
 import io.github.xrickastley.originsmath.OriginsMath;
-import io.github.xrickastley.originsmath.interfaces.SDIEntityInjection;
 import io.github.xrickastley.originsmath.util.InstanceValueSupplier;
 
 import net.minecraft.entity.LivingEntity;
@@ -30,20 +29,6 @@ public class AttributeLinkedResourcePower extends SuppliedLinkedVariableIntPower
 				.add("attribute", SerializableDataTypes.ATTRIBUTE)
 				.add("value", AttributeLinkedResourcePower.ATTRIBUTE_VALUE, AttributeValue.TOTAL),
 			data -> (powerType, livingEntity) -> new AttributeLinkedResourcePower(powerType, livingEntity, data.get("attribute"), data.get("value"))
-		);
-	}
-
-	public static PowerFactory<?> createFacetory() {
-		return new PowerFactory<>(
-			OriginsMath.identifier("attribute_linked_resource"),
-			new SerializableData()
-				.add("attribute", SerializableDataTypes.ATTRIBUTE)
-				.add("value", AttributeLinkedResourcePower.ATTRIBUTE_VALUE, AttributeValue.TOTAL),
-			data -> (powerType, livingEntity) -> {
-				((SDIEntityInjection) data).setEntity(livingEntity);
-
-				return new AttributeLinkedResourcePower(powerType, livingEntity, data.get("attribute"), data.get("value"));
-			}
 		);
 	}
 

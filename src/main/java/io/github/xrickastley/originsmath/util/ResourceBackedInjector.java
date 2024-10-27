@@ -97,6 +97,8 @@ public class ResourceBackedInjector {
 		
 			T newFactory = transformationFunction.apply(factory, sdCopy);
 
+			// Avoid duplicates.
+			if (factoryRegistry.containsId(newFactory.getSerializerId())) return;
 			
 			OriginsMath
 				.sublogger(ResourceBackedInjector.class)

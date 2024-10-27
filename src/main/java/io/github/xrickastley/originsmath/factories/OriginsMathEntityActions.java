@@ -11,6 +11,7 @@ import net.minecraft.registry.Registry;
 public class OriginsMathEntityActions {
 	public static void register() {
 		register(VariableExecuteCommandAction.getFactory());
+		register(VariableChangeResourceAction.getFactory());
 
 		OriginsMath
 			.sublogger(OriginsMathPowers.class)
@@ -18,6 +19,8 @@ public class OriginsMathEntityActions {
 	}
 
 	private static ActionFactory<Entity> register(ActionFactory<Entity> actionFactory) {
+		if (ApoliRegistries.ENTITY_ACTION.containsId(actionFactory.getSerializerId())) return ApoliRegistries.ENTITY_ACTION.get(actionFactory.getSerializerId());
+
 		return Registry.register(ApoliRegistries.ENTITY_ACTION, actionFactory.getSerializerId(), actionFactory);
 	}
 }

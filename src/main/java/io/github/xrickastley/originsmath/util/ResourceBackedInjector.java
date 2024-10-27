@@ -67,9 +67,6 @@ public class ResourceBackedInjector {
 			// Avoid creating duplicates.
 			if (factory.getSerializerId().getNamespace().equals("origins-math")) return;
 
-			// Avoid creating factories for duplicates (Apoli stuff + Origins stuff)
-			if (factory.getSerializerId().getNamespace().equals("origins")) return;
-
 			if (!shouldCreateInjection(factory.getSerializableData())) {
 				OriginsMath
 					.sublogger(ResourceBackedInjector.class)

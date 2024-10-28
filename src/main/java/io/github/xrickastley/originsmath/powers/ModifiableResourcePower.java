@@ -50,7 +50,7 @@ public class ModifiableResourcePower extends ResourcePower {
     public int getMax() {
         return ResourceBoundModifyingPower.applyModifiers(
             entity, 
-            ModifyResourceMinimum.class, 
+            ModifyResourceMaximum.class, 
             max, 
             this.getType()
         );

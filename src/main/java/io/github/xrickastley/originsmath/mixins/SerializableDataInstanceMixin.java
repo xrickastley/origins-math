@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.xrickastley.originsmath.interfaces.SDIEntityInjection;
 import io.github.xrickastley.originsmath.util.ResourceBacked;
+
 import net.minecraft.entity.Entity;
 
 @Mixin(SerializableData.Instance.class)

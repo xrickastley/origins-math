@@ -1,5 +1,7 @@
 package io.github.xrickastley.originsmath.util;
 
+import java.util.Optional;
+
 import com.chocohead.mm.api.ClassTinkerers;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
@@ -13,6 +15,7 @@ import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.VariableIntPower;
 import io.github.xrickastley.originsmath.powers.LinkedVariableIntPower;
+
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -21,8 +24,6 @@ import net.minecraft.text.Text;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
-
-import java.util.Optional;
 
 // will this even overwrite or just add? edit: THIS IS POSSIBLE?!?!?!?!
 public class ResourceCommand {

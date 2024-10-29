@@ -18,6 +18,7 @@ import io.github.apace100.apoli.power.PowerTypeReference;
 import io.github.apace100.apoli.power.VariableIntPower;
 import io.github.apace100.calio.data.SerializableDataType;
 import io.github.xrickastley.originsmath.powers.LinkedVariableIntPower;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
 
@@ -30,6 +31,7 @@ public class VariableSerializer {
 		VariableSerializer::read,
 		VariableSerializer::write
 	);
+
 	private final HashMap<String, PowerType<?>> variableMap = new HashMap<>();
 	
 	private static void send(PacketByteBuf packet, VariableSerializer serializer) {

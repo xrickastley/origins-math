@@ -19,6 +19,7 @@ import io.github.xrickastley.originsmath.mixins.ActionFactoryAccessor;
 import io.github.xrickastley.originsmath.mixins.ConditionFactoryAccessor;
 import io.github.xrickastley.originsmath.mixins.SerializableDataAccessor;
 import io.github.xrickastley.originsmath.mixins.SerializableDataFieldAccessor;
+
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.entity.Entity;
 import net.minecraft.registry.Registry;

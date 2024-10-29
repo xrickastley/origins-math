@@ -1,10 +1,10 @@
 package io.github.xrickastley.originsmath.util;
 
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import io.github.apace100.apoli.data.ApoliDataTypes;
 import io.github.apace100.apoli.power.PowerType;

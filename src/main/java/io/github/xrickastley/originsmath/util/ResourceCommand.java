@@ -1,11 +1,11 @@
 package io.github.xrickastley.originsmath.util;
 
-import java.util.Optional;
-
 import com.chocohead.mm.api.ClassTinkerers;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+
+import java.util.Optional;
 
 import io.github.apace100.apoli.command.PowerTypeArgumentType;
 import io.github.apace100.apoli.command.ResourceCommand.SubCommand;

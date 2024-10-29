@@ -1,14 +1,14 @@
 package io.github.xrickastley.originsmath.util;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.mariuszgromada.math.mxparser.Argument;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 
 import io.github.apace100.apoli.data.ApoliDataTypes;
 import io.github.apace100.apoli.power.CooldownPower;

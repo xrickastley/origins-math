@@ -70,16 +70,11 @@ public class ModifiableResourcePower extends ResourcePower {
 
 	@Override
 	public int setValue(int newValue) {
-		System.out.println("value set!");
-
-        // If the current value is to be retained and the new value isn't bounded by min and max, return the current value. 
-        if (retainValue && (newValue < this.getMin() || newValue > this.getMax())) return this.currentValue;
+        // If the current value is to be retained and the new value and current value isn't bounded by min and max, return the current value. 
+        if (retainValue && (newValue < this.getMin() || newValue > this.getMax()) && (currentValue < this.getMin() || currentValue > this.getMax())) return this.currentValue;
 
         int oldValue = this.currentValue;
         int actualNewValue = (this.currentValue = (int) MathHelper.clamp(newValue, this.getMin(), this.getMax()));
-
-		System.out.printf("MathHelper.clamp(%d, %d, %d) = %d\n", newValue, this.getMin(), this.getMax(), (int) MathHelper.clamp(newValue, this.getMin(), this.getMax()));
-		System.out.println(actualNewValue);
 
 		if (oldValue != actualNewValue) {
             if (this.actionOnMin != null && actualNewValue == min) actionOnMin.accept(entity);
@@ -91,7 +86,7 @@ public class ModifiableResourcePower extends ResourcePower {
 
     @Override
     public void fromTag(NbtElement tag) {
-        currentValue = MathHelper.clamp(((NbtInt) tag).intValue(), this.getMin(), this.getMax());
+        currentValue = ((NbtInt) tag).intValue();
     }
 
     @Override
@@ -106,7 +101,7 @@ public class ModifiableResourcePower extends ResourcePower {
                 .add("max", SerializableDataTypes.INT)
                 .addFunctionedDefault("start_value", SerializableDataTypes.INT, data -> data.getInt("min"))
 				.add("enforce_limits", SerializableDataTypes.BOOLEAN, true)
-				.add("retain_value", SerializableDataTypes.BOOLEAN, true)
+				.add("retain_value", SerializableDataTypes.BOOLEAN, false)
                 .add("hud_render", ApoliDataTypes.HUD_RENDER, HudRender.DONT_RENDER)
                 .add("min_action", ApoliDataTypes.ENTITY_ACTION, null)
                 .add("max_action", ApoliDataTypes.ENTITY_ACTION, null),

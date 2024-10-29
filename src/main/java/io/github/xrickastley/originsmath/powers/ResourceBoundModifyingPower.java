@@ -15,6 +15,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
+/**
+ * Represents a power than can modify the "bounds" of a modifiable resource.
+ */
 public abstract class ResourceBoundModifyingPower extends ValueModifyingPower {
 	protected final PowerType<?> resource;
 
@@ -39,7 +42,7 @@ public abstract class ResourceBoundModifyingPower extends ValueModifyingPower {
 	public static <T extends ResourceBoundModifyingPower> int applyModifiers(Entity entity, Class<T> powerClass, int baseValue, PowerType<?> resource) {
 		return (int) PowerHolderComponent.modify(
             entity, 
-            ModifyResourceMaximum.class, 
+            powerClass, 
             baseValue,
             power -> power.appliesToResource(resource)
         );

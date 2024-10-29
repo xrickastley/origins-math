@@ -11,6 +11,8 @@ import net.minecraft.registry.Registry;
 public class OriginsMathEntityConditions {
 	public static void register() {
 		register(CompareResourcesCondition.getFactory());
+		register(EmptyResourceCondition.getFactory());
+		register(FullResourceCondition.getFactory());
 
 		OriginsMath
 			.sublogger(OriginsMathPowers.class)

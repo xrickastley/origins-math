@@ -56,6 +56,15 @@ public class ModifierCommand {
 		final PowerType<?> powerType = PowerTypeArgumentType.getPower(context, "power");
 		final Power power = component.getPower(powerType);
 
+		if (power == null) {
+			final Text errorText = Text.of(String.format("Entity %s doesn't have the requested power: %s", target.getName().getString(), powerType.getIdentifier()));
+			errorText.getStyle().withColor(Formatting.RED);
+
+			source.sendError(errorText);
+
+			return 0;
+		}
+
 		if (!(power instanceof final ValueModifyingPower vmp)) {
 			final Text errorText = Text.of(String.format("Power type %s isn't a valid modifying power!", powerType.getIdentifier()));
 			errorText.getStyle().withColor(Formatting.RED);

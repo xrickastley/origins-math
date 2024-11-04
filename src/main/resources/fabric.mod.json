@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "origins-math",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"name": "Origins: Math",
 	"description": "Adds the capability for you to use math for your Origin powers, as well as enhancing the current capabilities of Resource powers.",
 	"authors": [

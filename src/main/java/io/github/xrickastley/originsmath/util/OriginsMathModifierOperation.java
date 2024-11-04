@@ -24,22 +24,22 @@ import net.minecraft.registry.Registry;
 public enum OriginsMathModifierOperation implements IModifierOperation {
 	STANDARD_MULTIPLY_BASE(
 		Phase.BASE, 
-		233, 
+		33, 
 		(values, base, current) -> current * values.stream().reduce(0.0, Double::sum)
 	),
 	STANDARD_MULTIPLY_TOTAL(
 		Phase.TOTAL,
-		233,
+		33,
 		(values, base, current) -> current * values.stream().reduce(0.0, Double::sum)
 	),
 	STANDARD_DIVIDE_BASE(
 		Phase.BASE,
-		266,
+		66,
 		(values, base, current) -> current / values.stream().reduce(0.0, Double::sum)
 	),
 	STANDARD_DIVIDE_TOTAL(
 		Phase.TOTAL,
-		266,
+		66,
 		(values, base, current) -> current / values.stream().reduce(0.0, Double::sum)
 	);
 

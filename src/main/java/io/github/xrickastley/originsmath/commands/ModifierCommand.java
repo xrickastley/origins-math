@@ -76,7 +76,7 @@ public class ModifierCommand {
 
 		final DecimalFormat df = new DecimalFormat("#.#####");
 
-		source.sendFeedback(() -> Text.of(String.format("Base value: %s, Modifier Result (%s): %s", df.format(base), powerType.getIdentifier().toString(), df.format(ModifierUtil.applyModifiers(target, vmp.getModifiers(), base)))), false);
+		source.sendFeedback(() -> Text.of(String.format("Applied Modifier: %s\nBase value: %s\nModifier Result: %s", powerType.getIdentifier().toString(), df.format(base), df.format(ModifierUtil.applyModifiers(target, vmp.getModifiers(), base)))), false);
 
 		return 1;
 	}

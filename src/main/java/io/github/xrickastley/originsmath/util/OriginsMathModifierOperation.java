@@ -29,12 +29,12 @@ public enum OriginsMathModifierOperation implements IModifierOperation {
 	),
 	STANDARD_MULTIPLY_TOTAL(
 		Phase.TOTAL,
-		266,
+		233,
 		(values, base, current) -> current * values.stream().reduce(0.0, Double::sum)
 	),
 	STANDARD_DIVIDE_BASE(
 		Phase.BASE,
-		233,
+		266,
 		(values, base, current) -> current / values.stream().reduce(0.0, Double::sum)
 	),
 	STANDARD_DIVIDE_TOTAL(

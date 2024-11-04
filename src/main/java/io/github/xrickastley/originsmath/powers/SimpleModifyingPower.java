@@ -15,7 +15,7 @@ public class SimpleModifyingPower extends ValueModifyingPower {
 	public static PowerFactory<?> createFactory() {
 		return ValueModifyingPower.createValueModifyingFactory(
 			SimpleModifyingPower::new,
-			OriginsMath.identifier("simple_modify")
+			OriginsMath.identifier("modify_simple")
 		);
 	}
 }

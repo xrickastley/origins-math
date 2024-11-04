@@ -1,4 +1,4 @@
-package io.github.xrickastley.originsmath.util;
+package io.github.xrickastley.originsmath.commands;
 
 import com.chocohead.mm.api.ClassTinkerers;
 import com.mojang.brigadier.CommandDispatcher;

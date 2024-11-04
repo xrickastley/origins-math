@@ -11,6 +11,7 @@ import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.PowerTypeReference;
 import io.github.apace100.calio.ClassUtil;
 import io.github.apace100.calio.data.SerializableDataType;
+import io.github.xrickastley.originsmath.commands.ResourceCommand;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;

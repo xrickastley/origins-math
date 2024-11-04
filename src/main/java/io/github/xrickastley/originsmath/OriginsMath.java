@@ -4,14 +4,14 @@ import org.mariuszgromada.math.mxparser.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.github.xrickastley.originsmath.factories.OriginsMathCommands;
 import io.github.xrickastley.originsmath.factories.OriginsMathEntityActions;
 import io.github.xrickastley.originsmath.factories.OriginsMathEntityConditions;
 import io.github.xrickastley.originsmath.factories.OriginsMathPowers;
+import io.github.xrickastley.originsmath.util.OriginsMathModifierOperation;
 import io.github.xrickastley.originsmath.util.ResourceBackedInjector;
-import io.github.xrickastley.originsmath.util.ResourceCommand;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.util.Identifier;
 
 public class OriginsMath implements ModInitializer {
@@ -24,13 +24,11 @@ public class OriginsMath implements ModInitializer {
 		// Origins: Math is a free-of-charge, non-profit mod project.
 		License.iConfirmNonCommercialUse("_xRickAstley");
 
+		OriginsMathCommands.register();
 		OriginsMathEntityActions.register();
 		OriginsMathEntityConditions.register();
 		OriginsMathPowers.register();
-		
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-			ResourceCommand.register(dispatcher);
-		});
+		OriginsMathModifierOperation.register();
 		
 		ResourceBackedInjector.applyInjections();
 	}

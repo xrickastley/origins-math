@@ -15,10 +15,11 @@ public class OriginsMathPowers {
 		register(CurrentBiomeLinkedResourcePower::createFactory);
 		register(MathResourcePower::createFactory);
 		register(ModifiableResourcePower::createFactory);
-		register(ModifyResourceMaximum::createFactory);
-		register(ModifyResourceMinimum::createFactory);
+		register(ModifyResourceMaximumPower::createFactory);
+		register(ModifyResourceMinimumPower::createFactory);
 		register(PlayerLinkedResourcePower::createFactory);
 		register(ScoreboardLinkedResourcePower::createFactory);
+		register(SimpleModifyingPower::createFactory);
 		register(StatusEffectLinkedResourcePower::createFactory);
 
 		OriginsMath

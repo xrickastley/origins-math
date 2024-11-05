@@ -70,15 +70,15 @@ public class ModifiableResourcePower extends ResourcePower {
 
 	@Override
 	public int setValue(int newValue) {
-        // If the current value is to be retained and the new value and current value isn't bounded by min and max, return the current value. 
+        // If the current value is to be retained and the new value and current value aren't bounded by min and max, return the current value. 
         if (retainValue && (newValue < this.getMin() || newValue > this.getMax()) && (currentValue < this.getMin() || currentValue > this.getMax())) return this.currentValue;
 
         int oldValue = this.currentValue;
         int actualNewValue = (this.currentValue = (int) MathHelper.clamp(newValue, this.getMin(), this.getMax()));
 
 		if (oldValue != actualNewValue) {
-            if (this.actionOnMin != null && actualNewValue == min) actionOnMin.accept(entity);
-            if (this.actionOnMax != null && actualNewValue == max) actionOnMax.accept(entity);
+            if (this.actionOnMin != null && actualNewValue == this.getMin()) actionOnMin.accept(entity);
+            if (this.actionOnMax != null && actualNewValue == this.getMax()) actionOnMax.accept(entity);
         }
 
 		return actualNewValue;

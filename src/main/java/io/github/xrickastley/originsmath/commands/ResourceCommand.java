@@ -19,27 +19,36 @@ import io.github.xrickastley.originsmath.powers.LinkedVariableIntPower;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
-
-// will this even overwrite or just add? edit: THIS IS POSSIBLE?!?!?!?!
 public class ResourceCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
-            literal("resource")
+            CommandManager
+                .literal("resource")
                 .requires(cs -> cs.hasPermissionLevel(2))
-                .then(literal("get")
-                    .then(literal("absolute")
-                        .then(argument("target", EntityArgumentType.entity())
-                            .then(argument("power", PowerTypeArgumentType.power())
-                                .executes((command) -> resource(command, ClassTinkerers.getEnum(SubCommand.class, "GET_ABSOLUTE")))))))
+                .then(
+                    CommandManager
+                        .literal("get")
+                        .then(
+                            CommandManager
+                                .literal("absolute")
+                                .then(
+                                    CommandManager
+                                        .argument("target", EntityArgumentType.entity())
+                                        .then(
+                                            CommandManager
+                                               .argument("power", PowerTypeArgumentType.power())
+                                               .executes(command -> resource(command, ClassTinkerers.getEnum(SubCommand.class, "GET_ABSOLUTE")))
+                                        )
+                                )
+                        )
+                )
         );
     }
 
-    // This is a cleaner method than sticking it into every subcommand
     private static int resource(CommandContext<ServerCommandSource> context, SubCommand subCommand) throws CommandSyntaxException {
 		final SubCommand GetAbsolute = ClassTinkerers.getEnum(SubCommand.class, "GET_ABSOLUTE");
 

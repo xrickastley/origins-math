@@ -16,7 +16,10 @@ import io.github.xrickastley.originsmath.commands.ResourceCommand;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
 
-public class ResourceBacked<T extends Number> extends Number {
+public class ResourceBacked<T extends Number> 
+	extends Number 
+	implements Comparable<Number>
+{
 	private final PowerType<?> powerType;
 	private final T number;
 	private Entity targetEntity;
@@ -75,6 +78,30 @@ public class ResourceBacked<T extends Number> extends Number {
 	@Override
 	public long longValue() {
 		return (long) getValue();
+	}
+
+	@Override
+	public int compareTo(Number o) {
+		if (number != null) {
+			// Long -> Double loses precision.
+			if (number instanceof Long) {
+				return compare(number.longValue(), o.longValue());
+			// Any other number doesn't lose precision.
+			} else {
+				return compare(number.doubleValue(), o.doubleValue());
+			}
+		} else {
+			// As seen above, double can accomodate all numbers except long, so we use that.
+			return compare(number.doubleValue(), o.doubleValue());
+		}
+	}
+
+	public int compare(double x, double y) {
+		return (x < y) ? -1 : ((x == y) ? 0 : 1);
+	}
+
+	public int compare(long x, long y) {
+		return (x < y) ? -1 : ((x == y) ? 0 : 1);
 	}
 
 	private static <T extends Number> BiConsumer<PacketByteBuf, ResourceBacked<T>> createSendFn(Class<T> numberClass, BiConsumer<PacketByteBuf, T> sendToPacket) {

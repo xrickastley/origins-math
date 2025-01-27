@@ -90,6 +90,6 @@ public class ResourceCommand {
 		if (power instanceof final LinkedVariableIntPower lvip) return lvip.supplyDoubleValue();
 		else if (power instanceof final VariableIntPower vip) return vip.getValue();
 		else if (power instanceof final CooldownPower cp) return cp.getRemainingTicks();
-		else throw new RuntimeException(String.format("Attempted to use invalid power type \"%s\" as a resource!", power.getType().getIdentifier().toString()));
+		else throw new RuntimeException(String.format("Attempted to use invalid power type \"%s\" as a resource!", powerType.getIdentifier().toString()));
 	}
 }

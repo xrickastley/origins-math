@@ -33,7 +33,7 @@ public class RelativeResourceCondition {
 		if (power instanceof final LinkedVariableIntPower lvip) return lvip.supplyDoubleValue() / lvip.getMax();
 		else if (power instanceof final VariableIntPower vip) return vip.getValue() / vip.getMax();
 		else if (power instanceof final CooldownPower cp) return cp.getProgress();
-		else throw new RuntimeException(String.format("Attempted to use invalid power type \"%s\" as a resource!", power.getType().getIdentifier().toString()));
+		else throw new RuntimeException(String.format("Attempted to use invalid power type \"%s\" as a resource!", powerType.getIdentifier().toString()));
 	}
 
     public static ConditionFactory<Entity> getFactory() {

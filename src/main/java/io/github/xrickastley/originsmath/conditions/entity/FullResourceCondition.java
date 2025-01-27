@@ -20,7 +20,7 @@ public class FullResourceCondition {
 			return vip.getValue() >= vip.getMax();
 		} else if (power instanceof final CooldownPower cp) {
 			return cp.getRemainingTicks() >= cp.cooldownDuration;
-		} else throw new RuntimeException(String.format("Attempted to use invalid power type \"%s\" as a resource!", power.getType().getIdentifier().toString()));
+		} else throw new RuntimeException(String.format("Attempted to use invalid power type \"%s\" as a resource!", powerType.getIdentifier().toString()));
     }
 
     public static ConditionFactory<Entity> getFactory() {

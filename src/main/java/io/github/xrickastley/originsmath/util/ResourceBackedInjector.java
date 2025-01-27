@@ -6,6 +6,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import io.github.apace100.apoli.access.EntityLinkedItemStack;
 import io.github.apace100.apoli.power.factory.Factory;
 import io.github.apace100.apoli.power.factory.action.ActionFactory;
 import io.github.apace100.apoli.power.factory.condition.ConditionFactory;
@@ -22,9 +23,11 @@ import io.github.xrickastley.originsmath.mixins.SerializableDataFieldAccessor;
 
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
+import net.minecraft.world.World;
 
 /**
  * Utility class used for injecting "Resource-backed" versions into registries containing a {@link Factory}. <br> <br>
@@ -34,17 +37,17 @@ import net.minecraft.util.Pair;
  */
 @SuppressWarnings("unchecked")
 public class ResourceBackedInjector {
-	private static final ArrayList<Pair<Registry<? extends Factory>, BiFunction<? extends Factory, SerializableData, ? extends Factory>>> injections = new ArrayList<>();
+	private static final ArrayList<Pair<Registry<? extends Factory>, BiFunction<? extends Factory, SerializableData, ? extends Factory>>> INJECTIONS = new ArrayList<>();
 
 	/**
 	 * Applies and clears all currently registered factory registry injections. 
 	 */
 	public static void applyInjections() {
-		injections
+		INJECTIONS
 			.stream()
 			.forEach(pair -> injectToFactoryRegistry(ClassInstanceUtil.castClassInstance(pair.getLeft()), ClassInstanceUtil.castClassInstance(pair.getRight())));
 
-		injections.clear();
+		INJECTIONS.clear();
 	}
 
 	/**
@@ -54,7 +57,7 @@ public class ResourceBackedInjector {
 	 * @param transformationFunction The transformation function that takes the old {@link Factory} and the injected {@link SerializableData} and returns the "Resource-backed factory".
 	 */
 	public static <T extends Factory> void createFactoryInjection(final Registry<T> factoryRegistry, BiFunction<T, SerializableData, T> transformationFunction) {
-		injections.add(new Pair<>(factoryRegistry, transformationFunction));
+		INJECTIONS.add(new Pair<>(factoryRegistry, transformationFunction));
 	}
 
 	/**
@@ -179,6 +182,62 @@ public class ResourceBackedInjector {
 					((SDIEntityInjection) data).setEntity(entity);
 
 					return ((ConditionFactoryAccessor<Entity>) oldFactory).getCondition().apply(data, entity);
+				}
+			)
+		);
+
+		createFactoryInjection(
+			ApoliRegistries.BIENTITY_ACTION,
+			(oldFactory, newData) -> new ActionFactory<Pair<Entity, Entity>>(
+				createSerializerId(oldFactory),
+				newData,
+				(data, actorAndTarget) -> {
+					((SDIEntityInjection) data).setEntity(actorAndTarget.getLeft());
+
+					((ActionFactoryAccessor<Pair<Entity, Entity>>) oldFactory).getEffect().accept(data, actorAndTarget);
+				}
+			)
+		);
+
+		createFactoryInjection(
+			ApoliRegistries.BIENTITY_CONDITION,
+			(oldFactory, newData) -> new ConditionFactory<Pair<Entity, Entity>>(
+				createSerializerId(oldFactory),
+				newData,
+				(data, actorAndTarget) -> {
+					((SDIEntityInjection) data).setEntity(actorAndTarget.getLeft());
+
+					return ((ConditionFactoryAccessor<Pair<Entity, Entity>>) oldFactory).getCondition().apply(data, actorAndTarget);
+				}
+			)
+		);
+
+		createFactoryInjection(
+			ApoliRegistries.ITEM_CONDITION,
+			(oldFactory, newData) -> new ConditionFactory<Pair<World, ItemStack>>(
+				createSerializerId(oldFactory),
+				newData,
+				(data, worldAndStack) -> {
+					Entity holder = ((EntityLinkedItemStack)(Object) worldAndStack.getRight()).apoli$getEntity();
+
+					((SDIEntityInjection) data).setEntity(holder);
+
+					return ((ConditionFactoryAccessor<Pair<World, ItemStack>>) oldFactory).getCondition().apply(data, worldAndStack);
+				}
+			)
+		);
+
+		createFactoryInjection(
+			ApoliRegistries.ITEM_ACTION,
+			(oldFactory, newData) -> new ActionFactory<Pair<World, ItemStack>>(
+				createSerializerId(oldFactory),
+				newData,
+				(data, worldAndStack) -> {
+					Entity holder = ((EntityLinkedItemStack)(Object) worldAndStack.getRight()).apoli$getEntity();
+
+					((SDIEntityInjection) data).setEntity(holder);
+
+					((ActionFactoryAccessor<Pair<World, ItemStack>>) oldFactory).getEffect().accept(data, worldAndStack);
 				}
 			)
 		);

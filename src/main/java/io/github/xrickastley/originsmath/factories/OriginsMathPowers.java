@@ -23,18 +23,6 @@ public class OriginsMathPowers {
 		register(SimpleModifyingPower::createFactory);
 		register(StatusEffectLinkedResourcePower::createFactory);
 
-		register(AttributeModifyTransferPower::createFactory);
-		register(DamageOverTimePower::createFactory);
-		register(EntityGlowPower::createFactory);
-		register(ExhaustOverTimePower::createFactory);
-		register(FireProjectilePower::createFactory);
-		register(ModelColorPower::createFactory);
-		register(NightVisionPower::createFactory);
-		register(OverlayPower::createFactory);
-		register(ParticlePower::createFactory);
-		register(PhasingPower::createFactory);
-		register(ToggleNightVisionPower::createFactory);
-
 		OriginsMath
 			.sublogger(OriginsMathPowers.class)
 			.info("Registered all powers!");

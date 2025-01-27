@@ -6,7 +6,6 @@ import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.apoli.registry.ApoliRegistries;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.powers.*;
-import io.github.xrickastley.originsmath.powers.apoli.*;
 
 import net.minecraft.registry.Registry;
 

@@ -13,6 +13,9 @@ public class OriginsMathPowers {
 	public static void register() {
 		register(AttributeLinkedResourcePower::createFactory);
 		register(CurrentBiomeLinkedResourcePower::createFactory);
+		register(DamageDealtLinkedResourcePower::createFactory);
+		register(DamageTakenLinkedResourcePower::createFactory);
+		register(HealingLinkedResourcePower::createFactory);
 		register(MathResourcePower::createFactory);
 		register(ModifiableResourcePower::createFactory);
 		register(ModifyResourceMaximumPower::createFactory);

@@ -4,6 +4,7 @@ import org.mariuszgromada.math.mxparser.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.github.xrickastley.originsmath.factories.OriginsMathBientityActions;
 import io.github.xrickastley.originsmath.factories.OriginsMathCommands;
 import io.github.xrickastley.originsmath.factories.OriginsMathEntityActions;
 import io.github.xrickastley.originsmath.factories.OriginsMathEntityConditions;
@@ -24,6 +25,7 @@ public class OriginsMath implements ModInitializer {
 		// Origins: Math is a free-of-charge, non-profit mod project.
 		License.iConfirmNonCommercialUse("_xRickAstley");
 
+		OriginsMathBientityActions.register();
 		OriginsMathCommands.register();
 		OriginsMathEntityActions.register();
 		OriginsMathEntityConditions.register();

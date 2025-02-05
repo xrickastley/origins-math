@@ -20,7 +20,6 @@ import io.github.xrickastley.originsmath.powers.HealingLinkedResourcePower;
 
 import com.llamalad7.mixinextras.sugar.Local;
 
-@Debug(export = true)
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(final EntityType<?> type, final World world) {

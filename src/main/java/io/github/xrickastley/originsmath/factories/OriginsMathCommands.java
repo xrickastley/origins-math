@@ -2,8 +2,8 @@ package io.github.xrickastley.originsmath.factories;
 
 import com.mojang.brigadier.CommandDispatcher;
 
-import io.github.apace100.apoli.command.ResourceCommand;
 import io.github.xrickastley.originsmath.commands.ModifierCommand;
+import io.github.xrickastley.originsmath.commands.ResourceCommand;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.CommandRegistryAccess;

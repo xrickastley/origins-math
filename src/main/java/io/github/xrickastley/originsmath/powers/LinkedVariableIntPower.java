@@ -8,11 +8,11 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtInt;
 
 /**
- * A {@code VariableIntPower} for linking various Minecraft values through a valueSupplier.
+ * A {@link VariableIntPower} for linking various Minecraft values through a value supplier, either
+ * through {@code supplyValue()} or {@code supplyDoubleValue()}. <br> <br>
  * 
- * Since values are based on Minecraft values, modifying this resource will have no effect
- * on it or it's linked values, as it's values are obtained through 
- * {@link LinkedVariableIntPower#supplyValue()}.
+ * Since values are based on Minecraft values, modifying this resource will have no effect on it or
+ * it's linked values, as it's values are obtained through {@link LinkedVariableIntPower#supplyValue()}.
  */
 public abstract class LinkedVariableIntPower extends VariableIntPower {
 	public LinkedVariableIntPower(PowerType<?> type, LivingEntity entity) {

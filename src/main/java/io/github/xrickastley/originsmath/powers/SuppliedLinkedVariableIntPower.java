@@ -9,7 +9,7 @@ import net.minecraft.entity.LivingEntity;
 
 /**
  * A subclass of {@link LinkedVariableIntPower} used for simple linked values that can be 
- * easily supplied through {@code InstanceValueSupplier<T>}.
+ * easily supplied through the {@code InstanceValueSupplier<T>}.
  */
 public abstract class SuppliedLinkedVariableIntPower<T> extends LinkedVariableIntPower {
 	private final InstanceValueSupplier<T> valueSupplier;

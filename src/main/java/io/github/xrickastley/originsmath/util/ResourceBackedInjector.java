@@ -23,6 +23,7 @@ import io.github.xrickastley.originsmath.mixins.SerializableDataFieldAccessor;
 
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.minecraft.entity.Entity;
+import net.minecraft.inventory.StackReference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -229,15 +230,17 @@ public class ResourceBackedInjector {
 
 		createFactoryInjection(
 			ApoliRegistries.ITEM_ACTION,
-			(oldFactory, newData) -> new ActionFactory<Pair<World, ItemStack>>(
+			(oldFactory, newData) -> new ActionFactory<Pair<World, StackReference>>(
 				createSerializerId(oldFactory),
 				newData,
 				(data, worldAndStack) -> {
-					Entity holder = ((EntityLinkedItemStack)(Object) worldAndStack.getRight()).apoli$getEntity();
+					Entity holder = ((EntityLinkedItemStack)(Object) worldAndStack.getRight().get()).apoli$getEntity();
 
 					((SDIEntityInjection) data).setEntity(holder);
 
-					((ActionFactoryAccessor<Pair<World, ItemStack>>) oldFactory).getEffect().accept(data, worldAndStack);
+					((ActionFactoryAccessor<Pair<World, StackReference>>) oldFactory)
+							.getEffect()
+							.accept(data, worldAndStack);
 				}
 			)
 		);

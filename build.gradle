@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.8-SNAPSHOT'
+	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
 
@@ -11,12 +11,8 @@ base {
 }
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
-
+	mavenLocal()
+	mavenCentral()
 	exclusiveContent {
 		forRepository {
 			maven {
@@ -24,9 +20,46 @@ repositories {
 				url = "https://api.modrinth.com/maven"
 			}
 		}
+
 		filter {
 			includeGroup "maven.modrinth"
 		}
+	}
+	maven {
+		name = "QuiltMC"
+		url = "https://maven.quiltmc.org/repository/release"
+	}
+	maven {
+		name = 'Ladysnake Mods'
+		url = 'https://maven.ladysnake.org/releases'
+	}
+	maven {
+		name = 'Ladysnake Mods (snapshots)'
+		url = 'https://maven.ladysnake.org/snapshots'
+	}
+	maven {
+		url = 'https://maven.cafeteria.dev'
+		content {
+			includeGroup 'net.adriantodt.fabricmc'
+		}
+	}
+	maven {
+		url "https://maven.jamieswhiteshirt.com/libs-release"
+		content {
+			includeGroup "com.jamieswhiteshirt"
+		}
+	}
+	maven {
+		url "https://masa.dy.fi/maven"
+	}
+	maven {
+		url "https://jitpack.io"
+	}
+	maven {
+		url "https://maven.shedaniel.me/"
+	}
+	maven {
+		url "https://maven.terraformersmc.com/"
 	}
 	maven {
 		name = "Ladysnake Libs"
@@ -67,10 +100,43 @@ repositories {
 		name = "QuiltMC"
 		url = "https://maven.quiltmc.org/repository/release"
 	}
-    maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
-    }
+	maven {
+		name = "Modrinth"
+		url = "https://api.modrinth.com/maven"
+	}
+	maven {
+		name = "QuiltMC"
+		url = "https://maven.quiltmc.org/repository/release"
+	}
+	maven {
+		name = 'Ladysnake Mods'
+		url = 'https://maven.ladysnake.org/releases'
+	}
+	maven {
+		name = 'Ladysnake Mods (snapshots)'
+		url = 'https://maven.ladysnake.org/snapshots'
+	}
+	maven {
+		url = 'https://maven.cafeteria.dev'
+		content {
+			includeGroup 'net.adriantodt.fabricmc'
+		}
+	}
+	maven {
+		url "https://maven.jamieswhiteshirt.com/libs-release"
+		content {
+			includeGroup "com.jamieswhiteshirt"
+		}
+	}
+	maven {
+		url "https://maven.shedaniel.me/"
+	}
+	maven {
+		url "https://maven.terraformersmc.com/"
+	}
+	maven {
+		url "https://maven.ryanliptak.com/"
+	}
 }
 
 loom {
@@ -96,10 +162,10 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Apoli by Apace100
-	modImplementation "com.github.apace100:apoli:${project.apoli_version}"
+	// modImplementation "io.github.apace100:apoli:${project.apoli_version}"
 
 	// Origins by Apace100
-	modImplementation "com.github.apace100:origins-fabric:${project.origins_version}"
+	modImplementation "io.github.apace100:origins-fabric:${project.origins_version}"
 
 	// FabricASM for Enum additions
 	include(modImplementation("com.github.Chocohead:Fabric-ASM:${project.fabricasm_version}")) {
@@ -113,7 +179,7 @@ processResources {
 	inputs.property "version", project.version
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+		expand "version": inputs.properties.version
 	}
 }
 
@@ -132,8 +198,10 @@ java {
 }
 
 jar {
+	inputs.property "archivesName", project.base.archivesName
+
 	from("LICENSE") {
-		rename { "${it}_${project.base.archivesName.get()}"}
+		rename { "${it}_${inputs.properties.archivesName}"}
 	}
 }
 

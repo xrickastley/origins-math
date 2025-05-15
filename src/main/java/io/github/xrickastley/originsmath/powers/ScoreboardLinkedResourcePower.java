@@ -6,9 +6,8 @@ import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataTypes;
 import io.github.xrickastley.originsmath.OriginsMath;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.scoreboard.ReadableScoreboardScore;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.ScoreboardObjective;
 
@@ -17,7 +16,7 @@ public class ScoreboardLinkedResourcePower extends LinkedVariableIntPower {
 
 	private ScoreboardLinkedResourcePower(PowerType<?> type, LivingEntity entity, String objective) {
 		super(type, entity);
-		
+
 		this.objective = objective;
 	}
 
@@ -25,11 +24,11 @@ public class ScoreboardLinkedResourcePower extends LinkedVariableIntPower {
 	protected int supplyValue() {
 		final Scoreboard scoreboard = entity.getWorld().getScoreboard();
 		final ScoreboardObjective scObjective = scoreboard.getNullableObjective(objective);
-		final String name = ScoreboardLinkedResourcePower.getUuidOrNameString(entity);
+		ReadableScoreboardScore scScore = scoreboard.getScore(entity, scObjective);
 
-		return scObjective == null || !scoreboard.playerHasObjective(name, scObjective)
-			? 0
-			: scoreboard.getPlayerScore(name, scObjective).getScore();
+		return scScore == null
+				? 0
+				: scScore.getScore();
 	}
 
 	@Override
@@ -37,16 +36,12 @@ public class ScoreboardLinkedResourcePower extends LinkedVariableIntPower {
 		return supplyValue();
 	}
 
-	private static String getUuidOrNameString(Entity entity) {
-		return entity instanceof PlayerEntity playerEntity ? playerEntity.getEntityName() : entity.getUuidAsString();
-	}
-
 	public static PowerFactory<?> createFactory() {
 		return new PowerFactory<>(
-			OriginsMath.identifier("scoreboard_linked_resource"),
-			new SerializableData()
-				.add("objective", SerializableDataTypes.STRING),
-			data -> (powerType, livingEntity) -> new ScoreboardLinkedResourcePower(powerType, livingEntity, data.getString("objective"))
+				OriginsMath.identifier("scoreboard_linked_resource"),
+				new SerializableData()
+						.add("objective", SerializableDataTypes.STRING),
+				data -> (powerType, livingEntity) -> new ScoreboardLinkedResourcePower(powerType, livingEntity, data.getString("objective"))
 		);
 	}
 }

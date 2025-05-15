@@ -162,7 +162,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Apoli by Apace100
-	// modImplementation "io.github.apace100:apoli:${project.apoli_version}"
+	modImplementation "io.github.apace100:apoli:${project.apoli_version}"
 
 	// Origins by Apace100
 	modImplementation "io.github.apace100:origins-fabric:${project.origins_version}"

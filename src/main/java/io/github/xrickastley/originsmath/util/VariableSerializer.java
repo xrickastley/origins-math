@@ -14,7 +14,6 @@ import io.github.apace100.apoli.data.ApoliDataTypes;
 import io.github.apace100.apoli.power.CooldownPower;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
-import io.github.apace100.apoli.power.PowerTypeReference;
 import io.github.apace100.apoli.power.VariableIntPower;
 import io.github.apace100.calio.data.SerializableDataType;
 import io.github.xrickastley.originsmath.powers.LinkedVariableIntPower;
@@ -28,8 +27,7 @@ public class VariableSerializer {
 		VariableSerializer.class,
 		VariableSerializer::send,
 		VariableSerializer::recieve,
-		VariableSerializer::read,
-		VariableSerializer::write
+		VariableSerializer::read
 	);
 
 	private final HashMap<String, PowerType<?>> variableMap = new HashMap<>();
@@ -70,19 +68,6 @@ public class VariableSerializer {
 		}
 
 		return serializer;
-	}
-
-	private static JsonObject write(final VariableSerializer serializer) {
-		final JsonObject json = new JsonObject();
-
-		for (final Map.Entry<String, PowerType<?>> entry : serializer.variableMap.entrySet()) {
-			json.add(
-				entry.getKey(), 
-				ApoliDataTypes.POWER_TYPE.write(((PowerTypeReference<?>) entry.getValue()))
-			);
-		}
-
-		return json;
 	}
 	
 	private VariableSerializer() {}

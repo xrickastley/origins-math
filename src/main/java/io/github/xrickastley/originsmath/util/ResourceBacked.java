@@ -8,7 +8,6 @@ import java.util.function.Function;
 
 import io.github.apace100.apoli.data.ApoliDataTypes;
 import io.github.apace100.apoli.power.PowerType;
-import io.github.apace100.apoli.power.PowerTypeReference;
 import io.github.apace100.calio.ClassUtil;
 import io.github.apace100.calio.data.SerializableDataType;
 import io.github.xrickastley.originsmath.commands.ResourceCommand;
@@ -151,35 +150,26 @@ public class ResourceBacked<T extends Number>
 		};
 	}
 
-	private static <T extends Number> JsonElement write(ResourceBacked<T> resourceBacked) {
-		return resourceBacked.powerType == null
-			? new JsonPrimitive(resourceBacked.number)
-			: ApoliDataTypes.POWER_TYPE.write(((PowerTypeReference<?>) resourceBacked.powerType));
-	}
-
 	public static interface DataTypes {
 		public static SerializableDataType<ResourceBacked<Integer>> RESOURCE_BACKED_INT = new SerializableDataType<>(
 			ClassUtil.castClass(ResourceBacked.class),
 			ResourceBacked.createSendFn(Integer.class, PacketByteBuf::writeInt),
 			ResourceBacked.createReceiveFn(Integer.class, PacketByteBuf::readInt),
-			ResourceBacked.createReadFn(Integer.class, JsonPrimitive::getAsInt),
-			ResourceBacked::write
+			ResourceBacked.createReadFn(Integer.class, JsonPrimitive::getAsInt)
 		);
 
 		public static SerializableDataType<ResourceBacked<Float>> RESOURCE_BACKED_FLOAT = new SerializableDataType<>(
 			ClassUtil.castClass(ResourceBacked.class),
 			ResourceBacked.createSendFn(Float.class, PacketByteBuf::writeFloat),
 			ResourceBacked.createReceiveFn(Float.class, PacketByteBuf::readFloat),
-			ResourceBacked.createReadFn(Float.class, JsonPrimitive::getAsFloat),
-			ResourceBacked::write
+			ResourceBacked.createReadFn(Float.class, JsonPrimitive::getAsFloat)
 		);
 
 		public static SerializableDataType<ResourceBacked<Double>> RESOURCE_BACKED_DOUBLE = new SerializableDataType<>(
 			ClassUtil.castClass(ResourceBacked.class),
 			ResourceBacked.createSendFn(Double.class, PacketByteBuf::writeDouble),
 			ResourceBacked.createReceiveFn(Double.class, PacketByteBuf::readDouble),
-			ResourceBacked.createReadFn(Double.class, JsonPrimitive::getAsDouble),
-			ResourceBacked::write
+			ResourceBacked.createReadFn(Double.class, JsonPrimitive::getAsDouble)
 		);
 	}
 }

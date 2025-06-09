@@ -17,7 +17,7 @@ public class ScoreboardLinkedResourcePower extends LinkedVariableIntPower {
 
 	private ScoreboardLinkedResourcePower(PowerType<?> type, LivingEntity entity, String objective) {
 		super(type, entity);
-		
+
 		this.objective = objective;
 	}
 

@@ -214,15 +214,15 @@ public class ResourceBackedInjector {
 
 		createFactoryInjection(
 			ApoliRegistries.ITEM_CONDITION,
-			(oldFactory, newData) -> new ConditionFactory<Pair<World, ItemStack>>(
+			(oldFactory, newData) -> new ConditionFactory<ItemStack>(
 				createSerializerId(oldFactory),
 				newData,
-				(data, worldAndStack) -> {
-					Entity holder = ((EntityLinkedItemStack)(Object) worldAndStack.getRight()).apoli$getEntity();
+				(data, stack) -> {
+					Entity holder = ((EntityLinkedItemStack)(Object) stack).getEntity();
 
 					((SDIEntityInjection) data).setEntity(holder);
 
-					return ((ConditionFactoryAccessor<Pair<World, ItemStack>>) oldFactory).getCondition().apply(data, worldAndStack);
+					return ((ConditionFactoryAccessor<ItemStack>) oldFactory).getCondition().apply(data, stack);
 				}
 			)
 		);
@@ -233,7 +233,7 @@ public class ResourceBackedInjector {
 				createSerializerId(oldFactory),
 				newData,
 				(data, worldAndStack) -> {
-					Entity holder = ((EntityLinkedItemStack)(Object) worldAndStack.getRight()).apoli$getEntity();
+					Entity holder = ((EntityLinkedItemStack)(Object) worldAndStack.getRight()).getEntity();
 
 					((SDIEntityInjection) data).setEntity(holder);
 

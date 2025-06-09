@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 
 import io.github.apace100.calio.data.SerializableData;
+import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.interfaces.SDIEntityInjection;
 import io.github.xrickastley.originsmath.util.ResourceBacked;
 import net.minecraft.entity.Entity;
@@ -71,102 +72,6 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
         return (T) any;
     }
 
-	@Unique
-	public <T> void forceInjectBytecode(String name, CallbackInfoReturnable<T> cir) {
-		final StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		final String callerClassName = stackTrace[3].getClassName();
-		final String callerMethodName = stackTrace[3].getMethodName();
-        final int callerLineNumber = stackTrace[3].getLineNumber();
-
-		try {
-			final Class<?> callerClass = Class.forName(callerClassName);
-			final String classDescriptor = Type.getInternalName(callerClass);
-
-			// Only target direct SerializableData$Instance#get() calls.
-			if (classDescriptor.equals("io/github/apace100/calio/data/SerializableData$Instance")) return;
-
-			System.out.println("descriptor: " + classDescriptor);
-			System.out.println(callerMethodName);
-
-			final ClassReader classReader = new ClassReader(Type.getInternalName(callerClass));
-			final ClassNode classNode = new ClassNode();
-
-			classReader.accept(classNode, ClassReader.EXPAND_FRAMES);
-			
-			for (MethodNode method : classNode.methods) {
-			    if (!method.name.equals(callerMethodName)) continue; 
-				
-				System.out.println(method);
-				System.out.println("callerLineNumber: " + callerLineNumber);
-
-				for (AbstractInsnNode insn : method.instructions.toArray()) {
-					if (!(insn instanceof final LineNumberNode lineNode)) continue;
-
-					if (lineNode.line != callerLineNumber) continue;
-					
-					System.out.println("Found calling method: " + method);
-					System.out.println(String.format("\tName: %s | Line Number: %d", method.name, lineNode.line));
-
-					AbstractInsnNode current = lineNode.getNext();
-
-					System.out.println("current START");
-					int i = 0;
-					while (current != null) {
-						if (i >= 10) {
-							System.out.println("i has reached 1+! ABORTING...");
-
-							break;
-						}
-
-						System.out.println("insnNode class: " + current.getClass().getName());
-
-						i += 1;
-						
-						if (current instanceof final MethodInsnNode methodIsn) {
-							final String methodDescriptor = "L" + methodIsn.owner + "." + methodIsn.name;
-
-							System.out.println(methodDescriptor);
-
-							if (methodDescriptor.equals("Lio/github/apace100/calio/data/SerializableData$Instance.get")) {
-								if (current.getNext() instanceof final TypeInsnNode typeInsn) {
-									switch (typeInsn.desc) {
-										case "java/lang/Integer":
-											System.out.println("intValue");
-											// return rb.intValue();
-											break;
-										case "java/lang/Double":
-											System.out.println("doubleValue");
-											// return rb.doubleValue();
-											break;
-										case "java/lang/Float":
-											System.out.println("floatValue");
-											// return rb.floatValue();
-											break;
-										default:
-											break;
-									}
-								}
-
-								break;
-							}
-						}
-						
-						// System.out.println("methodIsn.name: " + methodIsn.name);
-
-						current = current.getNext();
-					}
-					System.out.println("current END");
-					
-					return;
-				}
-			}
-
-			// System.out.println("Origins: Math cannot find the calling method!");
-		} catch (Exception e) {
-			System.err.println(e);
-		}
-	}
-
 	/**
 	 * Utility method to get the calling context, i.e. the method that used 
 	 * {@code SerializableData$Instance#get()} <br> <br>
@@ -198,9 +103,7 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 			classReader.accept(classNode, ClassReader.EXPAND_FRAMES);
 			
 			for (final MethodNode method : classNode.methods) {
-			    if (!method.name.equals(callerMethodName)) continue; 
-
-				System.out.println(String.format("Found method: %s;%s", classDescriptor, method.name));
+			    if (!method.name.equals(callerMethodName)) continue;
 				
 				for (AbstractInsnNode insn : method.instructions.toArray()) {
 					if (!(insn instanceof final LineNumberNode lineNode)) continue;
@@ -211,7 +114,7 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 				}
 			}
 		} catch (Exception e) {
-			System.err.println(e);
+			OriginsMath.LOGGER.error("An error occured upon attempting to obtain the calling context:", e);
 		}
 		
 		return null;

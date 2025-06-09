@@ -135,15 +135,11 @@ public class ResourceBacked<T extends Number>
 
 	private static <T extends Number> Function<JsonElement, ResourceBacked<T>> createReadFn(Class<T> numberClass, Function<JsonPrimitive, T> readFromJson) {
 		return json -> {
-			System.out.println(json.toString());
-
 			if (!(json instanceof JsonPrimitive jsonPrimitive)) throw new UnsupportedOperationException(JsonElement.class.getSimpleName());
 
 			if (jsonPrimitive.isNumber()) {
 				return ResourceBacked.fromNumber(readFromJson.apply(jsonPrimitive));
 			} else {
-				System.out.println(jsonPrimitive.toString());
-
 				PowerType<?> powerType = ApoliDataTypes.POWER_TYPE.read(json);
 
 				return ResourceBacked.fromPowerType(powerType, numberClass);

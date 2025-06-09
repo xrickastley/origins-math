@@ -1,6 +1,6 @@
 # Origins: Math Mod
 
-Mod link: https://modrinth.com/mod/origins-math (Status: under review)
+Mod link: https://modrinth.com/mod/origins-math
 
 This is the GitHub repo for the Origins: Math mod.
 

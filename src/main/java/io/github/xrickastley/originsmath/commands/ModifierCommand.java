@@ -7,15 +7,14 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import java.text.DecimalFormat;
 
-import io.github.apace100.apoli.command.PowerHolderArgumentType;
 import io.github.apace100.apoli.command.PowerTypeArgumentType;
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.ValueModifyingPower;
 import io.github.apace100.apoli.util.modifier.ModifierUtil;
-
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
@@ -32,7 +31,7 @@ public class ModifierCommand {
 						.literal("apply")
 						.then(
 							CommandManager
-								.argument("target", PowerHolderArgumentType.holder())
+								.argument("target", EntityArgumentType.entity())
 								.then(
 									CommandManager
 										.argument("power", PowerTypeArgumentType.power())
@@ -49,7 +48,7 @@ public class ModifierCommand {
 
 	private static int apply(final CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		final ServerCommandSource source = context.getSource();
-		final LivingEntity target = PowerHolderArgumentType.getHolder(context, "target");
+		final Entity target = EntityArgumentType.getEntity(context, "target");
 		final PowerHolderComponent component = PowerHolderComponent.KEY.get(target);
 
 		final double base = DoubleArgumentType.getDouble(context, "base");

@@ -97,11 +97,11 @@ public class ResourceBacked<T extends Number>
 	}
 
 	public int compare(double x, double y) {
-		return (x < y) ? -1 : ((x == y) ? 0 : 1);
+		return Double.compare(x, y);
 	}
 
 	public int compare(long x, long y) {
-		return (x < y) ? -1 : ((x == y) ? 0 : 1);
+		return Long.compare(x, y);
 	}
 
 	private static <T extends Number> BiConsumer<PacketByteBuf, ResourceBacked<T>> createSendFn(Class<T> numberClass, BiConsumer<PacketByteBuf, T> sendToPacket) {
@@ -135,11 +135,15 @@ public class ResourceBacked<T extends Number>
 
 	private static <T extends Number> Function<JsonElement, ResourceBacked<T>> createReadFn(Class<T> numberClass, Function<JsonPrimitive, T> readFromJson) {
 		return json -> {
+			System.out.println(json.toString());
+
 			if (!(json instanceof JsonPrimitive jsonPrimitive)) throw new UnsupportedOperationException(JsonElement.class.getSimpleName());
 
 			if (jsonPrimitive.isNumber()) {
 				return ResourceBacked.fromNumber(readFromJson.apply(jsonPrimitive));
 			} else {
+				System.out.println(jsonPrimitive.toString());
+
 				PowerType<?> powerType = ApoliDataTypes.POWER_TYPE.read(json);
 
 				return ResourceBacked.fromPowerType(powerType, numberClass);

@@ -1,5 +1,6 @@
 package io.github.xrickastley.originsmath.mixins;
 
+import java.io.InputStream;
 import java.util.HashMap;
 
 import org.jetbrains.annotations.Nullable;
@@ -12,6 +13,7 @@ import org.objectweb.asm.tree.LineNumberNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.TypeInsnNode;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -59,10 +61,14 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 			// someClass#method > SerializableData$Instance.get > SerializableData$Instance.originsmath$injectResourceLinkToGet > SerializableData$Instance.originsmath$getCallingContext (4)
 			final LineNumberNode callCtx = this.getCallingContext(4);
 
+			OriginsMath.LOGGER.info("Calling context found, precasting ResourceBacked: {}", rb);
+
 			return callCtx != null
 				? SerializableDataInstanceMixin.cast(precastResourceBacked(rb, callCtx))
 				: original;
 		} catch (Exception e) {
+			OriginsMath.LOGGER.error("ResourceBacked precast failed: ", e);
+
 			return original;
 		}
 	}
@@ -97,7 +103,11 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 			// Exclude calls from io/github/apace100/calio/data/SerializableData$Instance as we've already handled them in their respective injectors.
 			if (classDescriptor.equals("io/github/apace100/calio/data/SerializableData$Instance")) return null;
 
-			final ClassReader classReader = new ClassReader(Type.getInternalName(callerClass));
+			OriginsMath.LOGGER.info("Target method: {};{}", callerClass, callerMethodName);
+
+			final ClassLoader loader = callerClass.getClassLoader();
+			final InputStream in = loader.getResourceAsStream(classDescriptor + ".class");
+			final ClassReader classReader = new ClassReader(in);
 			final ClassNode classNode = new ClassNode();
 
 			classReader.accept(classNode, ClassReader.EXPAND_FRAMES);
@@ -144,17 +154,30 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 				final String methodDescriptor = methodIsn.owner + "." + methodIsn.name;
 
 				if (methodDescriptor.equals("io/github/apace100/calio/data/SerializableData$Instance.get")) {
+					
+					OriginsMath.LOGGER.info("Method descriptor found, checking next instruction...");
+
 					AbstractInsnNode cur2 = current.getNext();
+
+					OriginsMath.LOGGER.info("Next instruction: {} | Opcode: {}", cur2.getClass().getSimpleName(), cur2.getOpcode());
 
 					if (cur2 instanceof final TypeInsnNode typeInsn && typeInsn.getOpcode() == Opcodes.CHECKCAST) {
 						switch (typeInsn.desc) {
 							case "java/lang/Integer":
+								OriginsMath.LOGGER.info("Precasted ResourceBacked: {} as java/lang/Integer!", rb);
+
 								return rb.intValue();
 							case "java/lang/Double":
+								OriginsMath.LOGGER.info("Precasted ResourceBacked: {} as java/lang/Double!", rb);
+
 								return rb.doubleValue();
 							case "java/lang/Float":
+								OriginsMath.LOGGER.info("Precasted ResourceBacked: {} as java/lang/Float!", rb);
+
 								return rb.floatValue();
 							default:
+								OriginsMath.LOGGER.info("No cast target found, aborting precast operation...", rb);
+
 								return rb;
 						}
 					}
@@ -165,6 +188,8 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 		
 			current = current.getNext();
 		}
+
+		OriginsMath.LOGGER.info("Unable to determine cast target, returning ResourceBacked...");
 
 		return rb;
 	}

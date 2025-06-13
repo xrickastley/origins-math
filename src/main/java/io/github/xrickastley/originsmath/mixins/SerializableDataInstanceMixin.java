@@ -1,5 +1,6 @@
 package io.github.xrickastley.originsmath.mixins;
 
+import java.io.InputStream;
 import java.util.HashMap;
 
 import org.jetbrains.annotations.Nullable;
@@ -97,7 +98,9 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 			// Exclude calls from io/github/apace100/calio/data/SerializableData$Instance as we've already handled them in their respective injectors.
 			if (classDescriptor.equals("io/github/apace100/calio/data/SerializableData$Instance")) return null;
 
-			final ClassReader classReader = new ClassReader(Type.getInternalName(callerClass));
+			final ClassLoader loader = callerClass.getClassLoader();
+			final InputStream in = loader.getResourceAsStream(classDescriptor + ".class");
+			final ClassReader classReader = new ClassReader(in);
 			final ClassNode classNode = new ClassNode();
 
 			classReader.accept(classNode, ClassReader.EXPAND_FRAMES);

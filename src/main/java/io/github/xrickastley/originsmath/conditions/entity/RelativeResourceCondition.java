@@ -1,17 +1,15 @@
 package io.github.xrickastley.originsmath.conditions.entity;
 
 import io.github.apace100.apoli.data.ApoliDataTypes;
-import io.github.apace100.apoli.power.CooldownPower;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
-import io.github.apace100.apoli.power.VariableIntPower;
 import io.github.apace100.apoli.power.factory.condition.ConditionFactory;
 import io.github.apace100.apoli.util.Comparison;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataTypes;
 import io.github.xrickastley.originsmath.OriginsMath;
-import io.github.xrickastley.originsmath.powers.LinkedVariableIntPower;
-
+import io.github.xrickastley.originsmath.util.ValueProviders;
+import io.github.xrickastley.originsmath.util.ValueProviders.ValueProvider;
 import net.minecraft.entity.Entity;
 
 public class RelativeResourceCondition {
@@ -29,11 +27,9 @@ public class RelativeResourceCondition {
 
 	private static double getRelativeValue(Entity entity, PowerType<?> powerType) {
 		final Power power = powerType.get(entity);
+		final ValueProvider<Power> Provider = ValueProviders.getProviderOrThrow(power);
 
-		if (power instanceof final LinkedVariableIntPower lvip) return lvip.supplyDoubleValue() / lvip.getMax();
-		else if (power instanceof final VariableIntPower vip) return vip.getValue() / vip.getMax();
-		else if (power instanceof final CooldownPower cp) return cp.getProgress();
-		else throw new RuntimeException(String.format("Attempted to use invalid power type \"%s\" as a resource!", powerType.getIdentifier().toString()));
+		return Provider.VALUE_PROVIDER.apply(power).doubleValue() / Provider.MAX_PROVIDER.apply(power).doubleValue();
 	}
 
     public static ConditionFactory<Entity> getFactory() {

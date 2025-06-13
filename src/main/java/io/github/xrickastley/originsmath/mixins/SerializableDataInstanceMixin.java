@@ -61,14 +61,10 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 			// someClass#method > SerializableData$Instance.get > SerializableData$Instance.originsmath$injectResourceLinkToGet > SerializableData$Instance.originsmath$getCallingContext (4)
 			final LineNumberNode callCtx = this.getCallingContext(4);
 
-			OriginsMath.LOGGER.info("Calling context found, precasting ResourceBacked: {}", rb);
-
 			return callCtx != null
 				? SerializableDataInstanceMixin.cast(precastResourceBacked(rb, callCtx))
 				: original;
 		} catch (Exception e) {
-			OriginsMath.LOGGER.error("ResourceBacked precast failed: ", e);
-
 			return original;
 		}
 	}
@@ -154,30 +150,17 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 				final String methodDescriptor = methodIsn.owner + "." + methodIsn.name;
 
 				if (methodDescriptor.equals("io/github/apace100/calio/data/SerializableData$Instance.get")) {
-					
-					OriginsMath.LOGGER.info("Method descriptor found, checking next instruction...");
-
 					AbstractInsnNode cur2 = current.getNext();
-
-					OriginsMath.LOGGER.info("Next instruction: {} | Opcode: {}", cur2.getClass().getSimpleName(), cur2.getOpcode());
 
 					if (cur2 instanceof final TypeInsnNode typeInsn && typeInsn.getOpcode() == Opcodes.CHECKCAST) {
 						switch (typeInsn.desc) {
 							case "java/lang/Integer":
-								OriginsMath.LOGGER.info("Precasted ResourceBacked: {} as java/lang/Integer!", rb);
-
 								return rb.intValue();
 							case "java/lang/Double":
-								OriginsMath.LOGGER.info("Precasted ResourceBacked: {} as java/lang/Double!", rb);
-
 								return rb.doubleValue();
 							case "java/lang/Float":
-								OriginsMath.LOGGER.info("Precasted ResourceBacked: {} as java/lang/Float!", rb);
-
 								return rb.floatValue();
 							default:
-								OriginsMath.LOGGER.info("No cast target found, aborting precast operation...", rb);
-
 								return rb;
 						}
 					}

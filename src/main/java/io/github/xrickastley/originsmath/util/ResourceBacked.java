@@ -9,9 +9,9 @@ import java.util.function.Function;
 import io.github.apace100.apoli.data.ApoliDataTypes;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.PowerTypeReference;
+import io.github.apace100.apoli.power.PowerTypeRegistry;
 import io.github.apace100.calio.ClassUtil;
 import io.github.apace100.calio.data.SerializableDataType;
-import io.github.xrickastley.originsmath.commands.ResourceCommand;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
@@ -37,6 +37,9 @@ public class ResourceBacked<T extends Number>
 	}
 
 	private ResourceBacked(final PowerType<?> powerType) {
+		if (!PowerTypeRegistry.contains(powerType.getIdentifier())) 
+			throw new IllegalArgumentException("Could not get power type from id '" + powerType.getIdentifier().toString() + "', as it was not registered!");
+
 		this.powerType = powerType;
 		this.number = null;
 	}
@@ -49,7 +52,7 @@ public class ResourceBacked<T extends Number>
 	private Number getValue() {
 		return this.powerType != null
 			? this.targetEntity != null
-				? ResourceCommand.getAbsoluteValue(powerType.get(targetEntity))
+				? ValueProviders.getValue(powerType.get(targetEntity))
 				: 0
 			: this.number != null
 				? this.number

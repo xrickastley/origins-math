@@ -5,8 +5,7 @@ import io.github.apace100.apoli.power.factory.condition.ConditionFactory;
 import io.github.apace100.apoli.util.Comparison;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.xrickastley.originsmath.OriginsMath;
-import io.github.xrickastley.originsmath.commands.ResourceCommand;
-
+import io.github.xrickastley.originsmath.util.ValueProviders;
 import net.minecraft.entity.Entity;
 
 public class CompareResourcesCondition {
@@ -15,8 +14,8 @@ public class CompareResourcesCondition {
 			final Comparison comparison = data.get("comparison");
 
 			return comparison.compare(
-				ResourceCommand.obtainResourceValue(entity, data.get("left_resource")),
-				ResourceCommand.obtainResourceValue(entity, data.get("right_resource"))
+				ValueProviders.getValueOrThrow(data.get("left_resource"), entity).doubleValue(),
+				ValueProviders.getValueOrThrow(data.get("right_resource"), entity).doubleValue()
 			);
 		} catch (Exception e) {
 			return false;

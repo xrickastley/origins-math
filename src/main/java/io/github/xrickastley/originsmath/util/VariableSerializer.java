@@ -11,13 +11,10 @@ import java.util.Map;
 import org.mariuszgromada.math.mxparser.Argument;
 
 import io.github.apace100.apoli.data.ApoliDataTypes;
-import io.github.apace100.apoli.power.CooldownPower;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.PowerTypeReference;
-import io.github.apace100.apoli.power.VariableIntPower;
 import io.github.apace100.calio.data.SerializableDataType;
-import io.github.xrickastley.originsmath.powers.LinkedVariableIntPower;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketByteBuf;
@@ -103,21 +100,15 @@ public class VariableSerializer {
 	 * @return An {@code Argument} with {@code variable} as the {@code argumentDefinitionString} with it's value being the power value of {@code entity}.
 	 */
 	public Argument getVariable(String variable, Entity entity) {
-		if (!variableMap.containsKey(variable)) throw new RuntimeException(String.format("Attempted to find invalid variable: \"%s\"!", variable));
+		if (!variableMap.containsKey(variable)) throw new IllegalArgumentException(String.format("Attempted to find invalid variable: \"%s\"!", variable));
 
 		final PowerType<?> powerType = variableMap.get(variable);
 		final Power power = powerType.get(entity);
 		final Argument argument = new Argument(variable);
 
-		if (power == null) throw new RuntimeException(String.format("Attempted to serialize invalid power: \"%s\" as variable!", powerType.getIdentifier().toString()));
+		if (power == null) throw new IllegalArgumentException(String.format("Attempted to serialize non-existent power: \"%s\" as variable!", powerType.getIdentifier().toString()));
 
-		if (power instanceof final LinkedVariableIntPower lvip) {
-			argument.setArgumentValue(lvip.supplyDoubleValue());
-		} else if (power instanceof final VariableIntPower vip) {
-			argument.setArgumentValue(vip.getValue());
-		} else if (power instanceof final CooldownPower cp) {
-			argument.setArgumentValue(cp.getRemainingTicks());
-		} else throw new RuntimeException(String.format("Attempted to use invalid power type \"%s\" as a variable!", power.getType().getIdentifier().toString()));
+		argument.setArgumentValue(ValueProviders.getValueOrThrow(power).doubleValue());
 	
 		return argument;
 	}

@@ -99,8 +99,6 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 			// Exclude calls from io/github/apace100/calio/data/SerializableData$Instance as we've already handled them in their respective injectors.
 			if (classDescriptor.equals("io/github/apace100/calio/data/SerializableData$Instance")) return null;
 
-			OriginsMath.LOGGER.info("Target method: {};{}", callerClass, callerMethodName);
-
 			final ClassLoader loader = callerClass.getClassLoader();
 			final InputStream in = loader.getResourceAsStream(classDescriptor + ".class");
 			final ClassReader classReader = new ClassReader(in);
@@ -171,8 +169,6 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 		
 			current = current.getNext();
 		}
-
-		OriginsMath.LOGGER.info("Unable to determine cast target, returning ResourceBacked...");
 
 		return rb;
 	}

@@ -35,8 +35,8 @@ public class AttributeLinkedResourcePower extends SuppliedLinkedVariableIntPower
 	private static final SerializableDataType<AttributeValue> ATTRIBUTE_VALUE = SerializableDataType.enumValue(AttributeValue.class);
 
 	private static enum AttributeValue implements InstanceValueSupplier<Pair<LivingEntity, EntityAttribute>> {
-		BASE  (pair -> pair.getLeft().getAttributeBaseValue(pair.getRight())),
-		TOTAL (pair -> pair.getLeft().getAttributeValue(pair.getRight()));
+		BASE	(pair -> pair.getLeft().getAttributeBaseValue(pair.getRight())),
+		TOTAL	(pair -> pair.getLeft().getAttributeValue(pair.getRight()));
 
 		private final Function<Pair<LivingEntity, EntityAttribute>, Number> supplier;
 

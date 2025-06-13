@@ -46,7 +46,7 @@ public class ResourceBackedInjector {
 	public static void applyInjections() {
 		INJECTIONS
 			.stream()
-			.forEach(pair -> injectToFactoryRegistry(ClassInstanceUtil.castClassInstance(pair.getLeft()), ClassInstanceUtil.castClassInstance(pair.getRight())));
+			.forEach(pair -> injectToFactoryRegistry(ClassInstanceUtil.castInstance(pair.getLeft()), ClassInstanceUtil.castInstance(pair.getRight())));
 
 		INJECTIONS.clear();
 	}

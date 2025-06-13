@@ -40,8 +40,8 @@ public class StatusEffectLinkedResourcePower extends SuppliedLinkedVariableIntPo
 	private static final SerializableDataType<StatusEffectProperty> STATUS_EFFECT_PROPERTY = SerializableDataType.enumValue(StatusEffectProperty.class);
 
 	private static enum StatusEffectProperty implements InstanceValueSupplier<StatusEffectInstance> {
-		AMPLIFIER (instance -> instance != null ? instance.getAmplifier() : -1),
-		DURATION  (instance -> instance != null ? instance.getDuration() : 0);
+		AMPLIFIER	(instance -> instance != null ? instance.getAmplifier() : -1),
+		DURATION 	(instance -> instance != null ? instance.getDuration() : 0);
 
 		private final Function<StatusEffectInstance, Number> supplier;
 

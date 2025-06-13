@@ -47,7 +47,7 @@ public class ValueProviders {
 			if (PROVIDERS.keySet().contains(superclass)) {
 				return true;
 			} else {
-				superclass = power.getClass().getSuperclass();
+				superclass = superclass.getSuperclass();
 			}
 		}
 
@@ -73,7 +73,7 @@ public class ValueProviders {
 			if (PROVIDERS.keySet().contains(superclass)) {
 				return ValueProviders.PROVIDERS.get(superclass);
 			} else {
-				superclass = power.getClass().getSuperclass();
+				superclass = superclass.getSuperclass();
 			}
 		}
 

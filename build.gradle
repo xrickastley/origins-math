@@ -98,13 +98,8 @@ dependencies {
 	// Apoli by Apace100
 	modImplementation "com.github.apace100:apoli:${project.apoli_version}"
 
-	// Origins by Apace100
-	modImplementation "com.github.apace100:origins-fabric:${project.origins_version}"
-
-	// FabricASM for Enum additions
-	include(modImplementation("com.github.Chocohead:Fabric-ASM:${project.fabricasm_version}")) {
-		exclude (group: "net.fabricmc.fabric-api")
-	}
+	// Origins by Apace100 (Technically not needed)
+	// modImplementation "com.github.apace100:origins-fabric:${project.origins_version}"
 
 	include modImplementation ('org.mariuszgromada.math:MathParser.org-mXparser:6.0.0')
 }

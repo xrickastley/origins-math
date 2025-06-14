@@ -1,6 +1,5 @@
 package io.github.xrickastley.originsmath.commands;
 
-import com.chocohead.mm.api.ClassTinkerers;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -8,7 +7,6 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import java.util.Optional;
 
 import io.github.apace100.apoli.command.PowerTypeArgumentType;
-import io.github.apace100.apoli.command.ResourceCommand.SubCommand;
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
@@ -38,7 +36,7 @@ public class ResourceCommand {
 										.then(
 											CommandManager
 											   .argument("power", PowerTypeArgumentType.power())
-											   .executes(command -> resource(command, ClassTinkerers.getEnum(SubCommand.class, "GET_ABSOLUTE")))
+											   .executes(command -> resource(command))
 										)
 								)
 						)
@@ -46,11 +44,7 @@ public class ResourceCommand {
 		);
 	}
 
-	private static int resource(CommandContext<ServerCommandSource> context, SubCommand subCommand) throws CommandSyntaxException {
-		final SubCommand GetAbsolute = ClassTinkerers.getEnum(SubCommand.class, "GET_ABSOLUTE");
-
-		if (subCommand != GetAbsolute) return 0;
-
+	private static int resource(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		final Entity entity = EntityArgumentType.getEntity(context, "target");
 
 		final ServerCommandSource source = context.getSource();

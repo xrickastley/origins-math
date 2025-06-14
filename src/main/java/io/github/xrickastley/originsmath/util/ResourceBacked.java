@@ -52,7 +52,7 @@ public class ResourceBacked<T extends Number>
 	private Number getValue() {
 		return this.powerType != null
 			? this.targetEntity != null
-				? ValueProviders.getValue(powerType.get(targetEntity))
+				? ValueProviders.getValueOr(powerType.get(targetEntity), 0)
 				: 0
 			: this.number != null
 				? this.number

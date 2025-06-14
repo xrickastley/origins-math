@@ -49,7 +49,7 @@ public class ResourceCommand {
 		final SubCommand GetAbsolute = ClassTinkerers.getEnum(SubCommand.class, "GET_ABSOLUTE");
 
 		if (subCommand != GetAbsolute) return 0;
-		
+
 		final Entity entity = EntityArgumentType.getEntity(context, "target");
 
 		final ServerCommandSource source = context.getSource();
@@ -63,7 +63,7 @@ public class ResourceCommand {
 		}
 
 		final Power power = PowerHolderComponent.KEY.get(entity).getPower(powerType);
-		final double value = ValueProviders.getValue(power).doubleValue();
+		final double value = ValueProviders.getValueOr(power, 0).doubleValue();
 
 		source.sendFeedback(() -> Text.translatable("commands.scoreboard.players.get.success", entity.getName().getString(), value, powerType.getIdentifier()), true);
 

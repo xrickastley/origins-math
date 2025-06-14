@@ -73,10 +73,16 @@ public class ValueProviders {
 	}
 	
 	public static ValueProvider<Power> getProvider(PowerType<?> powerType, Entity entity) {
-		return ValueProviders.getProvider(powerType.get(entity));
+		final Power power = powerType.get(entity);
+
+		if (power == null) throw new IllegalArgumentException("The provided power type '" + powerType.getIdentifier() + "' does not exist for the provided entity: " + entity.toString() + "!");
+
+		return ValueProviders.getProvider(power);
 	}
 
 	public static ValueProvider<Power> getProviderOrThrow(Power power) {
+		if (power == null) throw new IllegalArgumentException("You cannot get the ValueProvider of a null power!");
+
 		Class<?> superclass = power.getClass().getSuperclass();
 
 		while (superclass != null) {
@@ -91,7 +97,11 @@ public class ValueProviders {
 	}
 	
 	public static ValueProvider<Power> getProviderOrThrow(PowerType<?> powerType, Entity entity) {
-		return ValueProviders.getProviderOrThrow(powerType.get(entity));
+		final Power power = powerType.get(entity);
+
+		if (power == null) throw new IllegalArgumentException("The provided power type '" + powerType.getIdentifier() + "' does not exist for the provided entity: " + entity.toString() + "!");
+
+		return ValueProviders.getProviderOrThrow(power);
 	}
 
 	
@@ -123,10 +133,16 @@ public class ValueProviders {
 	}
 	
 	public static ValueModifier<Power> getModifier(PowerType<?> powerType, Entity entity) {
-		return ValueProviders.getModifier(powerType.get(entity));
+		final Power power = powerType.get(entity);
+
+		if (power == null) throw new IllegalArgumentException("The provided power type '" + powerType.getIdentifier() + "' does not exist for the provided entity: " + entity.toString() + "!");
+
+		return ValueProviders.getModifier(power);
 	}
 
 	public static ValueModifier<Power> getModifierOrThrow(Power power) {
+		if (power == null) throw new IllegalArgumentException("You cannot get the ValueModifier of a null power!");
+
 		Class<?> superclass = power.getClass().getSuperclass();
 
 		while (superclass != null) {
@@ -141,7 +157,11 @@ public class ValueProviders {
 	}
 	
 	public static ValueModifier<Power> getModifierOrThrow(PowerType<?> powerType, Entity entity) {
-		return ValueProviders.getModifierOrThrow(powerType.get(entity));
+		final Power power = powerType.get(entity);
+
+		if (power == null) throw new IllegalArgumentException("The provided power type '" + powerType.getIdentifier() + "' does not exist for the provided entity: " + entity.toString() + "!");
+
+		return ValueProviders.getModifierOrThrow(power);
 	}
 
 
@@ -151,7 +171,21 @@ public class ValueProviders {
 	}
 
 	public static Number getValue(PowerType<?> powerType, Entity entity) {
-		return ValueProviders.getValue(powerType.get(entity));
+		final Power power = powerType.get(entity);
+
+		if (power == null) throw new IllegalArgumentException("The provided power type '" + powerType.getIdentifier() + "' does not exist for the provided entity: " + entity.toString() + "!");
+
+		return ValueProviders.getValue(power);
+	}
+
+	public static Number getValueOr(Power power, Number or) {
+		return power != null
+			? ValueProviders.getProvider(power).VALUE_PROVIDER.apply(power)
+			: or;
+	}
+
+	public static Number getValueOr(PowerType<?> powerType, Entity entity, Number or) {
+		return ValueProviders.getValueOr(powerType.get(entity), or);
 	}
 
 	public static Number getValueOrThrow(Power power) {
@@ -159,7 +193,11 @@ public class ValueProviders {
 	}
 
 	public static Number getValueOrThrow(PowerType<?> powerType, Entity entity) {
-		return ValueProviders.getValueOrThrow(powerType.get(entity));
+		final Power power = powerType.get(entity);
+
+		if (power == null) throw new IllegalArgumentException("The provided power type '" + powerType.getIdentifier() + "' does not exist for the provided entity: " + entity.toString() + "!");
+
+		return ValueProviders.getValueOrThrow(power);
 	}
 
 	public static Number getMax(Power power) {
@@ -167,7 +205,11 @@ public class ValueProviders {
 	}
 
 	public static Number getMax(PowerType<?> powerType, Entity entity) {
-		return ValueProviders.getMax(powerType.get(entity));
+		final Power power = powerType.get(entity);
+
+		if (power == null) throw new IllegalArgumentException("The provided power type '" + powerType.getIdentifier() + "' does not exist for the provided entity: " + entity.toString() + "!");
+
+		return ValueProviders.getMax(power);
 	}
 
 	public static Number getMaxOrThrow(Power power) {
@@ -175,7 +217,11 @@ public class ValueProviders {
 	}
 
 	public static Number getMaxOrThrow(PowerType<?> powerType, Entity entity) {
-		return ValueProviders.getMaxOrThrow(powerType.get(entity));
+		final Power power = powerType.get(entity);
+
+		if (power == null) throw new IllegalArgumentException("The provided power type '" + powerType.getIdentifier() + "' does not exist for the provided entity: " + entity.toString() + "!");
+
+		return ValueProviders.getMaxOrThrow(power);
 	}
 
 	public static Number getMin(Power power) {
@@ -183,7 +229,11 @@ public class ValueProviders {
 	}
 
 	public static Number getMin(PowerType<?> powerType, Entity entity) {
-		return ValueProviders.getMin(powerType.get(entity));
+		final Power power = powerType.get(entity);
+
+		if (power == null) throw new IllegalArgumentException("The provided power type '" + powerType.getIdentifier() + "' does not exist for the provided entity: " + entity.toString() + "!");
+
+		return ValueProviders.getMin(power);
 	}
 
 	public static Number getMinOrThrow(Power power) {
@@ -191,7 +241,11 @@ public class ValueProviders {
 	}
 
 	public static Number getMinOrThrow(PowerType<?> powerType, Entity entity) {
-		return ValueProviders.getMinOrThrow(powerType.get(entity));
+		final Power power = powerType.get(entity);
+
+		if (power == null) throw new IllegalArgumentException("The provided power type '" + powerType.getIdentifier() + "' does not exist for the provided entity: " + entity.toString() + "!");
+
+		return ValueProviders.getMinOrThrow(power);
 	}
 
 	static {

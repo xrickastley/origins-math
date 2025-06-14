@@ -1,16 +1,17 @@
 package io.github.xrickastley.originsmath.mixins;
 
+import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.authlib.GameProfile;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.authlib.GameProfile;
-
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.xrickastley.originsmath.powers.DamageDealtLinkedResourcePower;
 import io.github.xrickastley.originsmath.powers.DamageTakenLinkedResourcePower;
+
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;

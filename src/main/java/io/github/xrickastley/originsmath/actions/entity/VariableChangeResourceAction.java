@@ -11,9 +11,10 @@ import io.github.apace100.apoli.util.ResourceOperation;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.powers.MathResourcePower;
+import io.github.xrickastley.originsmath.util.ValueProviders.ValueModifier;
 import io.github.xrickastley.originsmath.util.ValueProviders;
 import io.github.xrickastley.originsmath.util.VariableSerializer;
-import io.github.xrickastley.originsmath.util.ValueProviders.ValueModifier;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 

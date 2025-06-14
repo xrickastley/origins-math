@@ -6,6 +6,7 @@ import io.github.apace100.apoli.power.factory.action.ActionFactory;
 import io.github.apace100.apoli.registry.ApoliRegistries;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.actions.bientity.VariableExecuteCommandAction;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Pair;

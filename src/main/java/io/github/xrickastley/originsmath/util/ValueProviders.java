@@ -10,6 +10,7 @@ import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.VariableIntPower;
 import io.github.xrickastley.originsmath.powers.LinkedVariableIntPower;
+
 import net.minecraft.entity.Entity;
 
 /**

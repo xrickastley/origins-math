@@ -19,7 +19,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
  */
 public class StatusEffectLinkedResourcePower extends SuppliedLinkedVariableIntPower<StatusEffectInstance> {
 	private StatusEffectLinkedResourcePower(PowerType<?> type, LivingEntity entity, StatusEffect effect, StatusEffectProperty property) {
-		super(type, entity, property, () -> entity.getStatusEffect(effect));
+		super(type, entity, property, () -> entity.getStatusEffect(effect), true);
 	}
 
 	public static PowerFactory<?> createFactory() {
@@ -40,8 +40,18 @@ public class StatusEffectLinkedResourcePower extends SuppliedLinkedVariableIntPo
 	private static final SerializableDataType<StatusEffectProperty> STATUS_EFFECT_PROPERTY = SerializableDataType.enumValue(StatusEffectProperty.class);
 
 	private static enum StatusEffectProperty implements InstanceValueSupplier<StatusEffectInstance> {
-		AMPLIFIER	(instance -> instance != null ? instance.getAmplifier() : -1),
-		DURATION 	(instance -> instance != null ? instance.getDuration() : 0);
+		AMPLIFIER	(instance -> {
+			System.out.println("CALL: AMPLIFIER");
+			System.out.println(instance);
+
+			return instance != null ? instance.getAmplifier() : -1;
+		}),
+		DURATION 	(instance -> {
+			System.out.println("CALL: DURATION");
+			System.out.println(instance);
+
+			return instance != null ? instance.getDuration() : 0;
+		});
 
 		private final Function<StatusEffectInstance, Number> supplier;
 

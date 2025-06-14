@@ -9,7 +9,6 @@ import java.util.function.Function;
 import io.github.apace100.apoli.data.ApoliDataTypes;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.PowerTypeReference;
-import io.github.apace100.apoli.power.PowerTypeRegistry;
 import io.github.apace100.calio.ClassUtil;
 import io.github.apace100.calio.data.SerializableDataType;
 
@@ -37,9 +36,6 @@ public class ResourceBacked<T extends Number>
 	}
 
 	private ResourceBacked(final PowerType<?> powerType) {
-		if (!PowerTypeRegistry.contains(powerType.getIdentifier())) 
-			throw new IllegalArgumentException("Could not get power type from id '" + powerType.getIdentifier().toString() + "', as it was not registered!");
-
 		this.powerType = powerType;
 		this.number = null;
 	}

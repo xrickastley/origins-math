@@ -98,7 +98,7 @@ dependencies {
 	// Apoli by Apace100
 	modImplementation "com.github.apace100:apoli:${project.apoli_version}"
 
-	// Origins by Apace100 (Technically not needed)
+	// Origins by Apace100. This is technically not needed, as Origins: Math works with only Apoli and doesn't touch Origins anyways.
 	// modImplementation "com.github.apace100:origins-fabric:${project.origins_version}"
 
 	include modImplementation ('org.mariuszgromada.math:MathParser.org-mXparser:6.0.0')

@@ -15,7 +15,7 @@ public class FullResourceCondition {
 		final PowerType<?> powerType = data.get("resource");
 		final Power power = powerType.get(entity);
 
-		final ValueProvider<Power> provider = ValueProviders.getProviderOrThrow(power);
+		final ValueProvider<Power> provider = ValueProviders.getProviderOrThrow(powerType, entity);
 
 		return provider.VALUE_PROVIDER.apply(power) >= provider.MAX_PROVIDER.apply(power);
 	}

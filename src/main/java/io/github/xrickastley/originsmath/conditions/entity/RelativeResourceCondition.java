@@ -26,8 +26,8 @@ public class RelativeResourceCondition {
     }
 
 	private static double getRelativeValue(Entity entity, PowerType<?> powerType) {
+		final ValueProvider<Power> provider = ValueProviders.getProviderOrThrow(powerType, entity);
 		final Power power = powerType.get(entity);
-		final ValueProvider<Power> provider = ValueProviders.getProviderOrThrow(power);
 
 		return provider.VALUE_PROVIDER.apply(power) / provider.MAX_PROVIDER.apply(power);
 	}

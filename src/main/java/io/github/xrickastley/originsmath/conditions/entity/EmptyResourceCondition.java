@@ -13,9 +13,9 @@ import net.minecraft.entity.Entity;
 public class EmptyResourceCondition {
 	private static boolean condition(SerializableData.Instance data, Entity entity) {
 		final PowerType<?> powerType = data.get("resource");
-		final Power power = powerType.get(entity);
 
-		final ValueProvider<Power> provider = ValueProviders.getProviderOrThrow(power);
+		final ValueProvider<Power> provider = ValueProviders.getProviderOrThrow(powerType, entity);
+		final Power power = powerType.get(entity);
 
 		return provider.VALUE_PROVIDER.apply(power) <= provider.MIN_PROVIDER.apply(power);
 	}

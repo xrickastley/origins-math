@@ -108,7 +108,7 @@ public class VariableSerializer {
 
 		if (power == null) throw new IllegalArgumentException(String.format("Attempted to serialize non-existent power: \"%s\" as variable!", powerType.getIdentifier().toString()));
 
-		argument.setArgumentValue(ValueProviders.getValueOrThrow(power).doubleValue());
+		argument.setArgumentValue(ValueProviders.getValueOrThrow(powerType, entity).doubleValue());
 	
 		return argument;
 	}

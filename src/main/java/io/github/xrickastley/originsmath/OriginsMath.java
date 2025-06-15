@@ -4,6 +4,7 @@ import org.mariuszgromada.math.mxparser.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.github.apace100.apoli.util.NamespaceAlias;
 import io.github.xrickastley.originsmath.factories.OriginsMathBientityActions;
 import io.github.xrickastley.originsmath.factories.OriginsMathCommands;
 import io.github.xrickastley.originsmath.factories.OriginsMathEntityActions;
@@ -33,6 +34,8 @@ public class OriginsMath implements ModInitializer {
 		OriginsMathModifierOperation.register();
 		
 		ResourceBackedInjector.applyInjections();
+
+		NamespaceAlias.addAlias("origins-math", "apoli-math");
 	}
 
 	public static Identifier identifier(String path) {

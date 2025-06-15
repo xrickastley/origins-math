@@ -19,7 +19,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
  */
 public class StatusEffectLinkedResourcePower extends SuppliedLinkedVariableIntPower<StatusEffectInstance> {
 	private StatusEffectLinkedResourcePower(PowerType<?> type, LivingEntity entity, StatusEffect effect, StatusEffectProperty property) {
-		super(type, entity, property, () -> entity.getStatusEffect(effect));
+		super(type, entity, property, () -> entity.getStatusEffect(effect), true);
 	}
 
 	public static PowerFactory<?> createFactory() {

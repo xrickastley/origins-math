@@ -6,10 +6,11 @@ import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.factory.condition.ConditionFactory;
 import io.github.apace100.apoli.util.Comparison;
 import io.github.apace100.calio.data.SerializableData;
-import io.github.apace100.calio.data.SerializableDataTypes;
 import io.github.xrickastley.originsmath.OriginsMath;
-import io.github.xrickastley.originsmath.util.ValueProviders;
+import io.github.xrickastley.originsmath.util.ResourceBacked;
 import io.github.xrickastley.originsmath.util.ValueProviders.ValueProvider;
+import io.github.xrickastley.originsmath.util.ValueProviders;
+
 import net.minecraft.entity.Entity;
 
 public class RelativeResourceCondition {
@@ -26,10 +27,10 @@ public class RelativeResourceCondition {
     }
 
 	private static double getRelativeValue(Entity entity, PowerType<?> powerType) {
+		final ValueProvider<Power> provider = ValueProviders.getProviderOrThrow(powerType, entity);
 		final Power power = powerType.get(entity);
-		final ValueProvider<Power> Provider = ValueProviders.getProviderOrThrow(power);
 
-		return Provider.VALUE_PROVIDER.apply(power).doubleValue() / Provider.MAX_PROVIDER.apply(power).doubleValue();
+		return provider.VALUE_PROVIDER.apply(power) / provider.MAX_PROVIDER.apply(power);
 	}
 
     public static ConditionFactory<Entity> getFactory() {
@@ -38,7 +39,7 @@ public class RelativeResourceCondition {
             new SerializableData()
                 .add("resource", ApoliDataTypes.POWER_TYPE)
                 .add("comparison", ApoliDataTypes.COMPARISON)
-                .add("relativity", SerializableDataTypes.DOUBLE),
+                .add("relativity", ResourceBacked.DataTypes.RESOURCE_BACKED_DOUBLE),
             RelativeResourceCondition::condition
         );
     }

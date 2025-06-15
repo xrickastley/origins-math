@@ -4,15 +4,15 @@ import org.mariuszgromada.math.mxparser.Expression;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.apoli.data.ApoliDataTypes;
-import io.github.apace100.apoli.power.CooldownPower;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
-import io.github.apace100.apoli.power.VariableIntPower;
 import io.github.apace100.apoli.power.factory.action.ActionFactory;
 import io.github.apace100.apoli.util.ResourceOperation;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.powers.MathResourcePower;
+import io.github.xrickastley.originsmath.util.ValueProviders.ValueModifier;
+import io.github.xrickastley.originsmath.util.ValueProviders;
 import io.github.xrickastley.originsmath.util.VariableSerializer;
 
 import net.minecraft.entity.Entity;
@@ -27,23 +27,16 @@ public class VariableChangeResourceAction {
 		final Expression expression = data.get("expression");
 		final VariableSerializer variables = data.get("variables");
 
-		PowerHolderComponent component = PowerHolderComponent.KEY.get(entity);
-		Power power = component.getPower(powerType);
-		int change = ((int) new Expression(expression.getExpressionString(), variables.getArgumentArray(entity, false)).calculate());
+		final PowerHolderComponent component = PowerHolderComponent.KEY.get(entity);
+		final Power power = component.getPower(powerType);
+		final int change = ((int) new Expression(expression.getExpressionString(), variables.getArgumentArray(entity, false)).calculate());
 		
-		if (power instanceof VariableIntPower vip) {
-			if (operation == ResourceOperation.ADD) {
-				int newValue = vip.getValue() + change;
-				vip.setValue(newValue);
-			} else if (operation == ResourceOperation.SET) {
-				vip.setValue(change);
-			}
-		} else if (power instanceof CooldownPower cp) {
-			if (operation == ResourceOperation.ADD) {
-				cp.modify(change);
-			} else if (operation == ResourceOperation.SET) {
-				cp.setCooldown(change);
-			}
+		final ValueModifier<Power> modifier = ValueProviders.getModifier(powerType, entity);
+
+		if (operation == ResourceOperation.ADD) {
+			modifier.ADD_MODIFIER.accept(power, change);
+		} else {
+			modifier.SET_MODIFIER.accept(power, change);
 		}
 
 		PowerHolderComponent.syncPower(entity, powerType);

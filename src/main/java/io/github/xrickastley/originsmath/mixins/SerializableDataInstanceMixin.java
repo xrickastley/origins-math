@@ -1,5 +1,7 @@
 package io.github.xrickastley.originsmath.mixins;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+
 import java.io.InputStream;
 import java.util.HashMap;
 
@@ -20,12 +22,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-
 import io.github.apace100.calio.data.SerializableData;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.interfaces.SDIEntityInjection;
 import io.github.xrickastley.originsmath.util.ResourceBacked;
+
 import net.minecraft.entity.Entity;
 
 @Mixin(SerializableData.Instance.class)

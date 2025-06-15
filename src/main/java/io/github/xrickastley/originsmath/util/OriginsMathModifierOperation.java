@@ -83,8 +83,8 @@ public enum OriginsMathModifierOperation implements IModifierOperation {
 							value = instance.get("value");
 						} else {
 							Power p = component.getPower(powerType);
-							
-							// Not using LinkedVariableIntPower to keep parity with the standard Modifier Operations.
+
+							// Doesn't use the ValueProviders API to keep parity with the vanilla Origins modifier operations.
 							if (p instanceof VariableIntPower vip) value = vip.getValue();
 							else if (p instanceof CooldownPower cp) value = cp.getRemainingTicks();
 						}

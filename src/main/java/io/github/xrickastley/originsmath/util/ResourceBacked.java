@@ -9,7 +9,6 @@ import java.util.function.Function;
 import io.github.apace100.apoli.data.ApoliDataTypes;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.PowerTypeReference;
-import io.github.apace100.apoli.power.PowerTypeRegistry;
 import io.github.apace100.calio.ClassUtil;
 import io.github.apace100.calio.data.SerializableDataType;
 
@@ -37,9 +36,6 @@ public class ResourceBacked<T extends Number>
 	}
 
 	private ResourceBacked(final PowerType<?> powerType) {
-		if (!PowerTypeRegistry.contains(powerType.getIdentifier())) 
-			throw new IllegalArgumentException("Could not get power type from id '" + powerType.getIdentifier().toString() + "', as it was not registered!");
-
 		this.powerType = powerType;
 		this.number = null;
 	}
@@ -52,7 +48,7 @@ public class ResourceBacked<T extends Number>
 	private Number getValue() {
 		return this.powerType != null
 			? this.targetEntity != null
-				? ValueProviders.getValue(powerType.get(targetEntity))
+				? ValueProviders.getValueOr(powerType.get(targetEntity), 0)
 				: 0
 			: this.number != null
 				? this.number
@@ -80,31 +76,12 @@ public class ResourceBacked<T extends Number>
 
 	@Override
 	public long longValue() {
-		return (long) getValue();
+		return getValue().longValue();
 	}
 
 	@Override
 	public int compareTo(Number o) {
-		if (number != null) {
-			// Long -> Double loses precision.
-			if (number instanceof Long) {
-				return compare(number.longValue(), o.longValue());
-			// Any other number doesn't lose precision.
-			} else {
-				return compare(number.doubleValue(), o.doubleValue());
-			}
-		} else {
-			// As seen above, double can accomodate all numbers except long, so we use that.
-			return compare(number.doubleValue(), o.doubleValue());
-		}
-	}
-
-	public int compare(double x, double y) {
-		return Double.compare(x, y);
-	}
-
-	public int compare(long x, long y) {
-		return Long.compare(x, y);
+		return Double.compare(this.doubleValue(), o.doubleValue());
 	}
 
 	private static <T extends Number> BiConsumer<PacketByteBuf, ResourceBacked<T>> createSendFn(Class<T> numberClass, BiConsumer<PacketByteBuf, T> sendToPacket) {

@@ -8,7 +8,6 @@ import java.util.function.Function;
 
 import io.github.apace100.apoli.data.ApoliDataTypes;
 import io.github.apace100.apoli.power.PowerType;
-import io.github.apace100.apoli.power.PowerTypeRegistry;
 import io.github.apace100.calio.ClassUtil;
 import io.github.apace100.calio.data.SerializableDataType;
 

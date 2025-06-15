@@ -1,6 +1,5 @@
 package io.github.xrickastley.originsmath.commands;
 
-import com.chocohead.mm.api.ClassTinkerers;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -8,11 +7,11 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import java.util.Optional;
 
 import io.github.apace100.apoli.command.PowerTypeArgumentType;
-import io.github.apace100.apoli.command.ResourceCommand.SubCommand;
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.xrickastley.originsmath.util.ValueProviders;
+
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
@@ -37,7 +36,7 @@ public class ResourceCommand {
 										.then(
 											CommandManager
 											   .argument("power", PowerTypeArgumentType.power())
-											   .executes(command -> resource(command, ClassTinkerers.getEnum(SubCommand.class, "GET_ABSOLUTE")))
+											   .executes(command -> resource(command))
 										)
 								)
 						)
@@ -45,11 +44,7 @@ public class ResourceCommand {
 		);
 	}
 
-	private static int resource(CommandContext<ServerCommandSource> context, SubCommand subCommand) throws CommandSyntaxException {
-		final SubCommand GetAbsolute = ClassTinkerers.getEnum(SubCommand.class, "GET_ABSOLUTE");
-
-		if (subCommand != GetAbsolute) return 0;
-		
+	private static int resource(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		final Entity entity = EntityArgumentType.getEntity(context, "target");
 
 		final ServerCommandSource source = context.getSource();
@@ -63,7 +58,7 @@ public class ResourceCommand {
 		}
 
 		final Power power = PowerHolderComponent.KEY.get(entity).getPower(powerType);
-		final double value = ValueProviders.getValue(power).doubleValue();
+		final double value = ValueProviders.getValueOr(power, 0).doubleValue();
 
 		source.sendFeedback(() -> Text.translatable("commands.scoreboard.players.get.success", entity.getName().getString(), value, powerType.getIdentifier()), true);
 

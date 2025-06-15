@@ -3,6 +3,7 @@ package io.github.xrickastley.originsmath.powers;
 import org.mariuszgromada.math.mxparser.Expression;
 
 import io.github.apace100.apoli.power.PowerType;
+
 import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataType;

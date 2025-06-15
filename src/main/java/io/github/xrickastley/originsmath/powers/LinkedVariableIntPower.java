@@ -36,16 +36,6 @@ public abstract class LinkedVariableIntPower extends VariableIntPower {
 	public abstract double supplyDoubleValue();
 
 	@Override
-	public int getMin() {
-		return this.min;
-	}
-	
-	@Override
-	public int getMax() {
-		return this.max;
-	}
-
-	@Override
 	public int getValue() {
 		return supplyValue();
 	}

@@ -6,6 +6,7 @@ import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.actions.entity.*;
 
 import net.minecraft.entity.Entity;
+
 import net.minecraft.registry.Registry;
 
 public class OriginsMathEntityActions {

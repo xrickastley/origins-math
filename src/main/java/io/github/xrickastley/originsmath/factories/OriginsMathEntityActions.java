@@ -6,13 +6,13 @@ import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.actions.entity.*;
 
 import net.minecraft.entity.Entity;
-
 import net.minecraft.registry.Registry;
 
 public class OriginsMathEntityActions {
 	public static void register() {
 		register(VariableExecuteCommandAction.getFactory());
 		register(VariableChangeResourceAction.getFactory());
+		register(ChangeResourceAction.getFactory());
 
 		OriginsMath
 			.sublogger(OriginsMathPowers.class)

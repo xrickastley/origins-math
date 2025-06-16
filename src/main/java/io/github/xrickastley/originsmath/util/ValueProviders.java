@@ -52,13 +52,13 @@ public class ValueProviders {
 	}
 
 	public static boolean hasProvider(Power power) {
-		Class<?> superclass = power.getClass().getSuperclass();
+		Class<?> clazz = power.getClass();
 
-		while (superclass != null) {
-			if (PROVIDERS.keySet().contains(superclass)) {
+		while (clazz != null) {
+			if (PROVIDERS.keySet().contains(clazz)) {
 				return true;
 			} else {
-				superclass = superclass.getSuperclass();
+				clazz = clazz.getSuperclass();
 			}
 		}
 
@@ -84,13 +84,13 @@ public class ValueProviders {
 	public static ValueProvider<Power> getProviderOrThrow(Power power) {
 		if (power == null) throw new IllegalArgumentException("You cannot get the ValueProvider of a null power!");
 
-		Class<?> superclass = power.getClass().getSuperclass();
+		Class<?> clazz = power.getClass();
 
-		while (superclass != null) {
-			if (PROVIDERS.keySet().contains(superclass)) {
-				return ValueProviders.PROVIDERS.get(superclass);
+		while (clazz != null) {
+			if (PROVIDERS.keySet().contains(clazz)) {
+				return ValueProviders.PROVIDERS.get(clazz);
 			} else {
-				superclass = superclass.getSuperclass();
+				clazz = clazz.getSuperclass();
 			}
 		}
 
@@ -112,13 +112,13 @@ public class ValueProviders {
 	}
 
 	public static boolean hasModifier(Power power) {
-		Class<?> superclass = power.getClass().getSuperclass();
+		Class<?> clazz = power.getClass();
 
-		while (superclass != null) {
-			if (PROVIDERS.keySet().contains(superclass)) {
+		while (clazz != null) {
+			if (PROVIDERS.keySet().contains(clazz)) {
 				return true;
 			} else {
-				superclass = superclass.getSuperclass();
+				clazz = clazz.getSuperclass();
 			}
 		}
 
@@ -144,13 +144,13 @@ public class ValueProviders {
 	public static ValueModifier<Power> getModifierOrThrow(Power power) {
 		if (power == null) throw new IllegalArgumentException("You cannot get the ValueModifier of a null power!");
 
-		Class<?> superclass = power.getClass().getSuperclass();
+		Class<?> clazz = power.getClass();
 
-		while (superclass != null) {
-			if (MODIFIERS.keySet().contains(superclass)) {
-				return ValueProviders.MODIFIERS.get(superclass);
+		while (clazz != null) {
+			if (MODIFIERS.keySet().contains(clazz)) {
+				return ValueProviders.MODIFIERS.get(clazz);
 			} else {
-				superclass = superclass.getSuperclass();
+				clazz = clazz.getSuperclass();
 			}
 		}
 

@@ -8,8 +8,8 @@ import net.minecraft.entity.LivingEntity;
 
 public class ModifyResourceMinimumPower extends ResourceModifyingPower {
 	private ModifyResourceMinimumPower(PowerType<?> type, LivingEntity entity, PowerType<?> resource) {
-        super(type, entity, resource);
-    }
+		super(type, entity, resource);
+	}
 
 	public static PowerFactory<?> createFactory() {
 		return ResourceModifyingPower.createResourceModifyingFactory(

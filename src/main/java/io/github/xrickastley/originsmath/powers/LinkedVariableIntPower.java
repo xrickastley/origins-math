@@ -41,27 +41,27 @@ public abstract class LinkedVariableIntPower extends VariableIntPower {
 	}
 
 	@Override
-    public int setValue(int newValue) {
-        return supplyValue();
-    }
+	public int setValue(int newValue) {
+		return supplyValue();
+	}
 
 	@Override
-    public int increment() {
-        return supplyValue();
-    }
+	public int increment() {
+		return supplyValue();
+	}
 
 	@Override
-    public int decrement() {
-        return supplyValue();
-    }
+	public int decrement() {
+		return supplyValue();
+	}
 
-    @Override
-    public NbtElement toTag() {
-        return NbtInt.of(supplyValue());
-    }
+	@Override
+	public NbtElement toTag() {
+		return NbtInt.of(supplyValue());
+	}
 
-    @Override
-    public void fromTag(NbtElement tag) {
-        currentValue = (int) Math.floor(supplyValue());
-    }
+	@Override
+	public void fromTag(NbtElement tag) {
+		currentValue = (int) Math.floor(supplyValue());
+	}
 }

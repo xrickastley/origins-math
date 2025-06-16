@@ -19,12 +19,12 @@ public class ChangeResourceAction {
 	private static void action(SerializableData.Instance data, Entity entity) {
 		if (!(entity instanceof LivingEntity)) return;
 
-        final PowerType<?> powerType = data.get("resource");
-        final ResourceOperation operation = data.get("operation");
-        final ResourceBacked<?> change = data.get("change");
+		final PowerType<?> powerType = data.get("resource");
+		final ResourceOperation operation = data.get("operation");
+		final ResourceBacked<?> change = data.get("change");
 
-        final PowerHolderComponent component = PowerHolderComponent.KEY.get(entity);
-        final Power power = component.getPower(powerType);
+		final PowerHolderComponent component = PowerHolderComponent.KEY.get(entity);
+		final Power power = component.getPower(powerType);
 
 		final ValueModifier<Power> modifier = ValueProviders.getModifierOrThrow(powerType, entity);
 

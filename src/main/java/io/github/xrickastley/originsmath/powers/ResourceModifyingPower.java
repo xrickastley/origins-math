@@ -42,12 +42,12 @@ public abstract class ResourceModifyingPower extends ValueModifyingPower {
 
 	public static <T extends ResourceModifyingPower> double applyModifiers(Entity entity, Class<T> powerClass, double baseValue, PowerType<?> resource) {
 		return PowerHolderComponent.modify(
-            entity, 
-            powerClass, 
-            baseValue,
-            power -> power.appliesToResource(resource),
+			entity, 
+			powerClass, 
+			baseValue,
+			power -> power.appliesToResource(resource),
 			p -> {}
-        );
+		);
 	}
 
 	public static PowerFactory<?> createResourceModifyingFactory(Identifier id, TriFunction<PowerType<?>, LivingEntity, PowerType<?>, ResourceModifyingPower> powerConstructor) {

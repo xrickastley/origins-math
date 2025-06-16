@@ -10,7 +10,7 @@ import io.github.xrickastley.originsmath.util.ValueProviders;
 import net.minecraft.entity.Entity;
 
 public class CompareResourcesCondition {
-    private static boolean condition(SerializableData.Instance data, Entity entity) {
+	private static boolean condition(SerializableData.Instance data, Entity entity) {
 		try {
 			final Comparison comparison = data.get("comparison");
 
@@ -21,16 +21,16 @@ public class CompareResourcesCondition {
 		} catch (Exception e) {
 			return false;
 		}
-    }
+	}
 
-    public static ConditionFactory<Entity> getFactory() {
-        return new ConditionFactory<>(
-            OriginsMath.identifier("compare_resources"),
-            new SerializableData()
-                .add("left_resource", ApoliDataTypes.POWER_TYPE)
-                .add("comparison", ApoliDataTypes.COMPARISON)
-                .add("right_resource", ApoliDataTypes.POWER_TYPE),
-            CompareResourcesCondition::condition
-        );
-    }
+	public static ConditionFactory<Entity> getFactory() {
+		return new ConditionFactory<>(
+			OriginsMath.identifier("compare_resources"),
+			new SerializableData()
+				.add("left_resource", ApoliDataTypes.POWER_TYPE)
+				.add("comparison", ApoliDataTypes.COMPARISON)
+				.add("right_resource", ApoliDataTypes.POWER_TYPE),
+			CompareResourcesCondition::condition
+		);
+	}
 }

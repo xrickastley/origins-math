@@ -32,9 +32,9 @@ public class OriginsMathPowers {
 			.info("Registered all powers!");
 	}
 
-    private static PowerFactory<?> register(Supplier<PowerFactory<?>> factorySupplier) {
-        return register(factorySupplier.get());
-    }
+	private static PowerFactory<?> register(Supplier<PowerFactory<?>> factorySupplier) {
+		return register(factorySupplier.get());
+	}
 
 	private static PowerFactory<?> register(PowerFactory<?> powerFactory) {
 		if (ApoliRegistries.POWER_FACTORY.containsId(powerFactory.getSerializerId())) return ApoliRegistries.POWER_FACTORY.get(powerFactory.getSerializerId());

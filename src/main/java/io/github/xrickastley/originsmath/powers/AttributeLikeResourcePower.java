@@ -60,8 +60,6 @@ public class AttributeLikeResourcePower extends VariableIntPower {
     }
 
     public double setAbsoluteValue(double newValue) {
-        System.out.println("Sss");
-
         return currentAbsoluteValue = MathHelper.clamp(newValue, min, max);
     }
 
@@ -70,11 +68,7 @@ public class AttributeLikeResourcePower extends VariableIntPower {
     }
 
     public double addAbsoluteValue(double addedValue) {
-        System.out.println("addedValue: " + addedValue);
-
 		final double finalAddedValue = ResourceModifyingPower.applyModifiers(entity, ModifyAttributeLikeResourcePower.class, addedValue, this.type);
-
-        System.out.println(finalAddedValue);
 
         return currentAbsoluteValue = MathHelper.clamp(this.currentAbsoluteValue + finalAddedValue, min, max);
     }

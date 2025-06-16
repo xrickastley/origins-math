@@ -38,7 +38,7 @@ public class ModifiableResourcePower extends ResourcePower {
 
     @Override
     public int getMin() {
-        return ResourceBoundModifyingPower.applyModifiers(
+        return (int) ResourceModifyingPower.applyModifiers(
             entity, 
             ModifyResourceMinimumPower.class, 
             min, 
@@ -48,7 +48,7 @@ public class ModifiableResourcePower extends ResourcePower {
 
     @Override
     public int getMax() {
-        return ResourceBoundModifyingPower.applyModifiers(
+        return (int) ResourceModifyingPower.applyModifiers(
             entity, 
             ModifyResourceMaximumPower.class, 
             max, 

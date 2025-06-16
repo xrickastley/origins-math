@@ -9,6 +9,7 @@ import io.github.apace100.apoli.power.CooldownPower;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.VariableIntPower;
+import io.github.xrickastley.originsmath.powers.AttributeLikeResourcePower;
 import io.github.xrickastley.originsmath.powers.LinkedVariableIntPower;
 
 import net.minecraft.entity.Entity;
@@ -253,6 +254,18 @@ public class ValueProviders {
 		ValueProviders.registerProvider(
 			LinkedVariableIntPower.class, 
 			new ValueProvider<>(LinkedVariableIntPower::supplyDoubleValue, LinkedVariableIntPower::getMin, LinkedVariableIntPower::getMax)
+		);
+
+
+
+		ValueProviders.registerProvider(
+			AttributeLikeResourcePower.class,
+			new ValueProvider<>(AttributeLikeResourcePower::getAbsoluteValue, AttributeLikeResourcePower::getAbsoluteMin, AttributeLikeResourcePower::getAbsoluteMax)
+		);
+
+		ValueProviders.registerModifier(
+			AttributeLikeResourcePower.class,
+			new ValueModifier<>((p, v) -> p.setAbsoluteValue(v.doubleValue()), (p, v) -> p.addAbsoluteValue(v.doubleValue()))
 		);
 
 

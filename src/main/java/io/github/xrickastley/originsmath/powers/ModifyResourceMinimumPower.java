@@ -6,13 +6,13 @@ import io.github.xrickastley.originsmath.OriginsMath;
 
 import net.minecraft.entity.LivingEntity;
 
-public class ModifyResourceMinimumPower extends ResourceBoundModifyingPower {
+public class ModifyResourceMinimumPower extends ResourceModifyingPower {
 	private ModifyResourceMinimumPower(PowerType<?> type, LivingEntity entity, PowerType<?> resource) {
         super(type, entity, resource);
     }
 
 	public static PowerFactory<?> createFactory() {
-		return ResourceBoundModifyingPower.createResourceModifyingFactory(
+		return ResourceModifyingPower.createResourceModifyingFactory(
 			OriginsMath.identifier("modify_resource_minimum"),
 			ModifyResourceMinimumPower::new
 		);

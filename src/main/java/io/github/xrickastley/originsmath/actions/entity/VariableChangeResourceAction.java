@@ -31,7 +31,7 @@ public class VariableChangeResourceAction {
 		final Power power = component.getPower(powerType);
 		final int change = ((int) new Expression(expression.getExpressionString(), variables.getArgumentArray(entity, false)).calculate());
 		
-		final ValueModifier<Power> modifier = ValueProviders.getModifier(powerType, entity);
+		final ValueModifier<Power> modifier = ValueProviders.getModifierOrThrow(powerType, entity);
 
 		if (operation == ResourceOperation.ADD) {
 			modifier.ADD_MODIFIER.accept(power, change);

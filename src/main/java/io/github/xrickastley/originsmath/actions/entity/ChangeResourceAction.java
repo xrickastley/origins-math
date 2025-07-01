@@ -9,7 +9,6 @@ import io.github.apace100.apoli.util.ResourceOperation;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.util.ResourceBacked;
-import io.github.xrickastley.originsmath.util.ValueProviders.ValueModifier;
 import io.github.xrickastley.originsmath.util.ValueProviders;
 
 import net.minecraft.entity.Entity;
@@ -19,20 +18,13 @@ public class ChangeResourceAction {
 	private static void action(SerializableData.Instance data, Entity entity) {
 		if (!(entity instanceof LivingEntity)) return;
 
-		final PowerType<?> powerType = data.get("resource");
+		final PowerType<Power> powerType = data.get("resource");
 		final ResourceOperation operation = data.get("operation");
 		final ResourceBacked<?> change = data.get("change");
 
-		final PowerHolderComponent component = PowerHolderComponent.KEY.get(entity);
-		final Power power = component.getPower(powerType);
-
-		final ValueModifier<Power> modifier = ValueProviders.getModifierOrThrow(powerType, entity);
-
-		if (operation == ResourceOperation.ADD) {
-			modifier.ADD_MODIFIER.accept(power, change);
-		} else {
-			modifier.SET_MODIFIER.accept(power, change);
-		}
+		ValueProviders
+			.getModifierOrThrow(powerType, entity)
+			.modify(operation, powerType, entity, change);
 
 		PowerHolderComponent.syncPower(entity, powerType);
 	}

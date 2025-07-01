@@ -11,7 +11,6 @@ import io.github.apace100.apoli.util.ResourceOperation;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.powers.MathResourcePower;
-import io.github.xrickastley.originsmath.util.ValueProviders.ValueModifier;
 import io.github.xrickastley.originsmath.util.ValueProviders;
 import io.github.xrickastley.originsmath.util.VariableSerializer;
 
@@ -22,22 +21,16 @@ public class VariableChangeResourceAction {
 	private static void action(SerializableData.Instance data, Entity entity) {
 		if (!(entity instanceof LivingEntity)) return;
 
-		final PowerType<?> powerType = data.get("resource");
+		final PowerType<Power> powerType = data.get("resource");
 		final ResourceOperation operation = data.get("operation");
 		final Expression expression = data.get("expression");
 		final VariableSerializer variables = data.get("variables");
 
-		final PowerHolderComponent component = PowerHolderComponent.KEY.get(entity);
-		final Power power = component.getPower(powerType);
-		final int change = ((int) new Expression(expression.getExpressionString(), variables.getArgumentArray(entity, false)).calculate());
+		final double change = new Expression(expression.getExpressionString(), variables.getArgumentArray(entity, false)).calculate();
 		
-		final ValueModifier<Power> modifier = ValueProviders.getModifierOrThrow(powerType, entity);
-
-		if (operation == ResourceOperation.ADD) {
-			modifier.ADD_MODIFIER.accept(power, change);
-		} else {
-			modifier.SET_MODIFIER.accept(power, change);
-		}
+		ValueProviders
+			.getModifierOrThrow(powerType, entity)
+			.modify(operation, powerType, entity, change);
 
 		PowerHolderComponent.syncPower(entity, powerType);
 	}

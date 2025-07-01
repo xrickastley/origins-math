@@ -9,6 +9,7 @@ import io.github.apace100.apoli.power.CooldownPower;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.VariableIntPower;
+import io.github.apace100.apoli.util.ResourceOperation;
 import io.github.xrickastley.originsmath.powers.AttributeLikeResourcePower;
 import io.github.xrickastley.originsmath.powers.LinkedVariableIntPower;
 
@@ -317,5 +318,17 @@ public class ValueProviders {
 
 		public final BiConsumer<T, Number> SET_MODIFIER;
 		public final BiConsumer<T, Number> ADD_MODIFIER;
+
+		public void modify(ResourceOperation operation, PowerType<T> power, Entity entity, Number change) {
+			this.modify(operation, power.get(entity), change);
+		}
+
+		public void modify(ResourceOperation operation, T power, Number change) {
+			if (operation == ResourceOperation.ADD) {
+				this.ADD_MODIFIER.accept(power, change);
+			} else {
+				this.SET_MODIFIER.accept(power, change);
+			}
+		}
 	}
 }

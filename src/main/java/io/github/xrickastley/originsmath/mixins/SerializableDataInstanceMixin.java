@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import io.github.apace100.calio.data.SerializableData;
 import io.github.xrickastley.originsmath.OriginsMath;
+import io.github.xrickastley.originsmath.config.OriginsMathConfig;
 import io.github.xrickastley.originsmath.interfaces.SDIEntityInjection;
 import io.github.xrickastley.originsmath.util.ResourceBacked;
 
@@ -35,7 +36,7 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 	private Entity originsmath$targetEntity = null;
 
 	@Shadow(remap = false)
-    private final HashMap<String, Object> data = new HashMap<>();
+	private final HashMap<String, Object> data = new HashMap<>();
 
 	@Shadow(remap = false)
 	public abstract <T> T get(String name);
@@ -52,7 +53,7 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 		remap = false
 	)
 	public <T> T injectResourceLinkToGet(T original) {
-		if (!(original instanceof final ResourceBacked rb)) 
+		if (!(original instanceof final ResourceBacked rb) || !OriginsMathConfig.Experiments.EXTENDED_COMPATIBILITY_THROUGH_ASM.getValue()) 
 			return original;
 
 		rb.setTargetEntity(originsmath$targetEntity);
@@ -69,10 +70,10 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 		}
 	}
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	private static <T> T cast(Object any) {
-        return (T) any;
-    }
+		return (T) any;
+	}
 
 	/**
 	 * Utility method to get the calling context, i.e. the method that used 
@@ -90,7 +91,7 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 		final StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 		final String callerClassName = stackTrace[backtrack].getClassName();
 		final String callerMethodName = stackTrace[backtrack].getMethodName();
-        final int callerLineNumber = stackTrace[backtrack].getLineNumber();
+		final int callerLineNumber = stackTrace[backtrack].getLineNumber();
 
 		try {
 			final Class<?> callerClass = Class.forName(callerClassName);
@@ -107,7 +108,7 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 			classReader.accept(classNode, ClassReader.EXPAND_FRAMES);
 			
 			for (final MethodNode method : classNode.methods) {
-			    if (!method.name.equals(callerMethodName)) continue;
+				if (!method.name.equals(callerMethodName)) continue;
 				
 				for (AbstractInsnNode insn : method.instructions.toArray()) {
 					if (!(insn instanceof final LineNumberNode lineNode)) continue;

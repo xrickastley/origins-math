@@ -9,6 +9,8 @@ import io.github.apace100.apoli.power.CooldownPower;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.VariableIntPower;
+import io.github.apace100.apoli.util.ResourceOperation;
+import io.github.xrickastley.originsmath.powers.AttributeLikeResourcePower;
 import io.github.xrickastley.originsmath.powers.LinkedVariableIntPower;
 
 import net.minecraft.entity.Entity;
@@ -52,13 +54,13 @@ public class ValueProviders {
 	}
 
 	public static boolean hasProvider(Power power) {
-		Class<?> superclass = power.getClass().getSuperclass();
+		Class<?> clazz = power.getClass();
 
-		while (superclass != null) {
-			if (PROVIDERS.keySet().contains(superclass)) {
+		while (clazz != null) {
+			if (PROVIDERS.keySet().contains(clazz)) {
 				return true;
 			} else {
-				superclass = superclass.getSuperclass();
+				clazz = clazz.getSuperclass();
 			}
 		}
 
@@ -84,13 +86,13 @@ public class ValueProviders {
 	public static ValueProvider<Power> getProviderOrThrow(Power power) {
 		if (power == null) throw new IllegalArgumentException("You cannot get the ValueProvider of a null power!");
 
-		Class<?> superclass = power.getClass().getSuperclass();
+		Class<?> clazz = power.getClass();
 
-		while (superclass != null) {
-			if (PROVIDERS.keySet().contains(superclass)) {
-				return ValueProviders.PROVIDERS.get(superclass);
+		while (clazz != null) {
+			if (PROVIDERS.keySet().contains(clazz)) {
+				return ValueProviders.PROVIDERS.get(clazz);
 			} else {
-				superclass = superclass.getSuperclass();
+				clazz = clazz.getSuperclass();
 			}
 		}
 
@@ -112,13 +114,13 @@ public class ValueProviders {
 	}
 
 	public static boolean hasModifier(Power power) {
-		Class<?> superclass = power.getClass().getSuperclass();
+		Class<?> clazz = power.getClass();
 
-		while (superclass != null) {
-			if (PROVIDERS.keySet().contains(superclass)) {
+		while (clazz != null) {
+			if (PROVIDERS.keySet().contains(clazz)) {
 				return true;
 			} else {
-				superclass = superclass.getSuperclass();
+				clazz = clazz.getSuperclass();
 			}
 		}
 
@@ -144,13 +146,13 @@ public class ValueProviders {
 	public static ValueModifier<Power> getModifierOrThrow(Power power) {
 		if (power == null) throw new IllegalArgumentException("You cannot get the ValueModifier of a null power!");
 
-		Class<?> superclass = power.getClass().getSuperclass();
+		Class<?> clazz = power.getClass();
 
-		while (superclass != null) {
-			if (MODIFIERS.keySet().contains(superclass)) {
-				return ValueProviders.MODIFIERS.get(superclass);
+		while (clazz != null) {
+			if (MODIFIERS.keySet().contains(clazz)) {
+				return ValueProviders.MODIFIERS.get(clazz);
 			} else {
-				superclass = superclass.getSuperclass();
+				clazz = clazz.getSuperclass();
 			}
 		}
 
@@ -258,6 +260,18 @@ public class ValueProviders {
 
 
 		ValueProviders.registerProvider(
+			AttributeLikeResourcePower.class,
+			new ValueProvider<>(AttributeLikeResourcePower::getAbsoluteValue, AttributeLikeResourcePower::getAbsoluteMin, AttributeLikeResourcePower::getAbsoluteMax)
+		);
+
+		ValueProviders.registerModifier(
+			AttributeLikeResourcePower.class,
+			new ValueModifier<>((p, v) -> p.setAbsoluteValue(v.doubleValue()), (p, v) -> p.addAbsoluteValue(v.doubleValue()))
+		);
+
+
+
+		ValueProviders.registerProvider(
 			VariableIntPower.class,
 			new ValueProvider<>(VariableIntPower::getValue, VariableIntPower::getMin, VariableIntPower::getMax)
 		);
@@ -304,5 +318,17 @@ public class ValueProviders {
 
 		public final BiConsumer<T, Number> SET_MODIFIER;
 		public final BiConsumer<T, Number> ADD_MODIFIER;
+
+		public void modify(ResourceOperation operation, PowerType<T> power, Entity entity, Number change) {
+			this.modify(operation, power.get(entity), change);
+		}
+
+		public void modify(ResourceOperation operation, T power, Number change) {
+			if (operation == ResourceOperation.ADD) {
+				this.ADD_MODIFIER.accept(power, change);
+			} else {
+				this.SET_MODIFIER.accept(power, change);
+			}
+		}
 	}
 }

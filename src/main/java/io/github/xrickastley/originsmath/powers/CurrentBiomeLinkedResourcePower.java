@@ -39,12 +39,6 @@ public class CurrentBiomeLinkedResourcePower extends SuppliedLinkedVariableIntPo
 			this.supplier = supplier;
 		}
 
-		public int supplyValue(Biome biome) {
-			return supplier
-				.apply(biome)
-				.intValue();
-		}
-
 		public Number supplyAsNumber(Biome biome) {
 			return supplier.apply(biome);
 		}

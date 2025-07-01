@@ -12,5 +12,5 @@ import io.github.apace100.calio.data.SerializableData;
 @Mixin(ConditionFactory.class)
 public interface ConditionFactoryAccessor<T> {
 	@Accessor(remap = false)
-    public BiFunction<SerializableData.Instance, T, Boolean> getCondition();
+	public BiFunction<SerializableData.Instance, T, Boolean> getCondition();
 }

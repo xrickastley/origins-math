@@ -11,15 +11,19 @@ import net.minecraft.registry.Registry;
 
 public class OriginsMathPowers {
 	public static void register() {
+		register(AttributeLikeResourcePower::createFactory);
 		register(AttributeLinkedResourcePower::createFactory);
 		register(CurrentBiomeLinkedResourcePower::createFactory);
 		register(DamageDealtLinkedResourcePower::createFactory);
 		register(DamageTakenLinkedResourcePower::createFactory);
 		register(HealingLinkedResourcePower::createFactory);
+		register(LivingEntityLinkedResourcePower::createFactory);
 		register(MathResourcePower::createFactory);
 		register(ModifiableResourcePower::createFactory);
+		register(ModifyAttributeLikeResourcePower::createFactory);
 		register(ModifyResourceMaximumPower::createFactory);
 		register(ModifyResourceMinimumPower::createFactory);
+		register(NbtLinkedResourcePower::createFactory);
 		register(PlayerLinkedResourcePower::createFactory);
 		register(ScoreboardLinkedResourcePower::createFactory);
 		register(SimpleModifyingPower::createFactory);
@@ -30,9 +34,9 @@ public class OriginsMathPowers {
 			.info("Registered all powers!");
 	}
 
-    private static PowerFactory<?> register(Supplier<PowerFactory<?>> factorySupplier) {
-        return register(factorySupplier.get());
-    }
+	private static PowerFactory<?> register(Supplier<PowerFactory<?>> factorySupplier) {
+		return register(factorySupplier.get());
+	}
 
 	private static PowerFactory<?> register(PowerFactory<?> powerFactory) {
 		if (ApoliRegistries.POWER_FACTORY.containsId(powerFactory.getSerializerId())) return ApoliRegistries.POWER_FACTORY.get(powerFactory.getSerializerId());

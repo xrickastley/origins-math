@@ -12,5 +12,5 @@ import io.github.apace100.calio.data.SerializableData;
 @Mixin(ActionFactory.class)
 public interface ActionFactoryAccessor<T> {
 	@Accessor(remap = false)
-    public BiConsumer<SerializableData.Instance, T> getEffect();
+	public BiConsumer<SerializableData.Instance, T> getEffect();
 }

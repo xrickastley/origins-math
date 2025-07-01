@@ -30,10 +30,10 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	@Inject(
 		method = "applyDamage",
 		at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/entity/player/PlayerEntity;getAbsorptionAmount()F",
+			value = "INVOKE",
+			target = "Lnet/minecraft/entity/player/PlayerEntity;getAbsorptionAmount()F",
 			ordinal = 0
-        )
+		)
 	)
 	private void updateDamageResourcePowers(DamageSource source, float amount, CallbackInfo ci, @Local(ordinal = 1) float finalDMG) {
 		PowerHolderComponent

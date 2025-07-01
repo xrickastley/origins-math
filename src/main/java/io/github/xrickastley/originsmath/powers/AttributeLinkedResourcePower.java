@@ -44,12 +44,6 @@ public class AttributeLinkedResourcePower extends SuppliedLinkedVariableIntPower
 			this.supplier = supplier;
 		}
 
-		public int supplyValue(Pair<LivingEntity, EntityAttribute> entityAndAttribute) {
-			return supplier
-				.apply(entityAndAttribute)
-				.intValue();
-		}
-
 		public Number supplyAsNumber(Pair<LivingEntity, EntityAttribute> player) {
 			return supplier.apply(player);
 		}

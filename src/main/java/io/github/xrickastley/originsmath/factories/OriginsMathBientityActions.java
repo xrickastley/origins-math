@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import io.github.apace100.apoli.power.factory.action.ActionFactory;
 import io.github.apace100.apoli.registry.ApoliRegistries;
 import io.github.xrickastley.originsmath.OriginsMath;
+import io.github.xrickastley.originsmath.actions.bientity.CopyResourceValueAction;
 import io.github.xrickastley.originsmath.actions.bientity.VariableExecuteCommandAction;
 
 import net.minecraft.entity.Entity;
@@ -13,6 +14,7 @@ import net.minecraft.util.Pair;
 
 public class OriginsMathBientityActions {
 	public static void register() {
+		register(CopyResourceValueAction::getFactory);
 		register(VariableExecuteCommandAction::getFactory);
 
 		OriginsMath

@@ -11,12 +11,13 @@ import net.minecraft.registry.Registry;
 
 public class OriginsMathPowers {
 	public static void register() {
-		register(AttributeLinkedResourcePower::createFactory);
 		register(AttributeLikeResourcePower::createFactory);
+		register(AttributeLinkedResourcePower::createFactory);
 		register(CurrentBiomeLinkedResourcePower::createFactory);
 		register(DamageDealtLinkedResourcePower::createFactory);
 		register(DamageTakenLinkedResourcePower::createFactory);
 		register(HealingLinkedResourcePower::createFactory);
+		register(LivingEntityLinkedResourcePower::createFactory);
 		register(MathResourcePower::createFactory);
 		register(ModifiableResourcePower::createFactory);
 		register(ModifyAttributeLikeResourcePower::createFactory);

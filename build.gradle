@@ -100,43 +100,14 @@ repositories {
 		name = "QuiltMC"
 		url = "https://maven.quiltmc.org/repository/release"
 	}
-	maven {
-		name = "Modrinth"
-		url = "https://api.modrinth.com/maven"
-	}
-	maven {
-		name = "QuiltMC"
-		url = "https://maven.quiltmc.org/repository/release"
-	}
-	maven {
-		name = 'Ladysnake Mods'
-		url = 'https://maven.ladysnake.org/releases'
-	}
-	maven {
-		name = 'Ladysnake Mods (snapshots)'
-		url = 'https://maven.ladysnake.org/snapshots'
-	}
-	maven {
-		url = 'https://maven.cafeteria.dev'
-		content {
-			includeGroup 'net.adriantodt.fabricmc'
-		}
-	}
-	maven {
-		url "https://maven.jamieswhiteshirt.com/libs-release"
-		content {
-			includeGroup "com.jamieswhiteshirt"
-		}
-	}
-	maven {
-		url "https://maven.shedaniel.me/"
-	}
-	maven {
-		url "https://maven.terraformersmc.com/"
-	}
-	maven {
-		url "https://maven.ryanliptak.com/"
-	}
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
+    maven {
+        name 'Xander Maven'
+        url 'https://maven.isxander.dev/releases'
+    }
 }
 
 loom {
@@ -168,6 +139,10 @@ dependencies {
 	// modImplementation "com.github.apace100:origins-fabric:${project.origins_version}"
 
 	include modImplementation ('org.mariuszgromada.math:MathParser.org-mXparser:6.0.0')
+
+	modImplementation ("maven.modrinth:yacl:${project.yacl_version}")
+
+	modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
 
 processResources {
@@ -198,6 +173,14 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${inputs.properties.archivesName}"}
 	}
+}
+
+tasks.named('remapJar') {
+    archiveFileName.set("${project.archivesBaseName}-${project.version}-${project.minecraft_version}.jar")
+}
+
+tasks.named('remapSourcesJar') {
+    archiveFileName.set("${project.archivesBaseName}-${project.version}-${project.minecraft_version}-sources.jar")
 }
 
 // configure the maven publication

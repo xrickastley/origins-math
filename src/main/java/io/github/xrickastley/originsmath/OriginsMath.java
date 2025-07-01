@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.github.apace100.calio.util.IdentifierAlias;
+import io.github.xrickastley.originsmath.config.OriginsMathSavedConfig;
 import io.github.xrickastley.originsmath.factories.OriginsMathBientityActions;
 import io.github.xrickastley.originsmath.factories.OriginsMathCommands;
 import io.github.xrickastley.originsmath.factories.OriginsMathEntityActions;
@@ -14,11 +15,12 @@ import io.github.xrickastley.originsmath.util.OriginsMathModifierOperation;
 import io.github.xrickastley.originsmath.util.ResourceBackedInjector;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 
 public class OriginsMath implements ModInitializer {
 	public static final String MOD_ID = "origins-math";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 		
 	public void onInitialize() {
 		LOGGER.info("Origins: Math Initialized!");
@@ -36,6 +38,8 @@ public class OriginsMath implements ModInitializer {
 		ResourceBackedInjector.applyInjections();
 
 		IdentifierAlias.GLOBAL.addNamespaceAlias("origins-math", "apoli-math");
+
+		if (FabricLoader.getInstance().isModLoaded("yet_another_config_lib_v3")) OriginsMathSavedConfig.HANDLER.load();
 	}
 
 	public static Identifier identifier(String path) {

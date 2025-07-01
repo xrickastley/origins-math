@@ -17,26 +17,26 @@ import net.minecraft.server.world.ServerWorld;
 
 public class VariableExecuteCommandAction {
 	private static void action(SerializableData.Instance data, Entity entity) {
-        final MinecraftServer server = entity.getWorld().getServer();
+		final MinecraftServer server = entity.getWorld().getServer();
 
 		if (server == null) return;
 		
-        final boolean validOutput = !(entity instanceof ServerPlayerEntity) || ((ServerPlayerEntity) entity).networkHandler != null;
+		final boolean validOutput = !(entity instanceof ServerPlayerEntity) || ((ServerPlayerEntity) entity).networkHandler != null;
 		final VariableSerializer varSerializer = data.get("variables");
-        final ServerCommandSource source = new ServerCommandSource(
-            Apoli.config.executeCommand.showOutput && validOutput 
+		final ServerCommandSource source = new ServerCommandSource(
+			Apoli.config.executeCommand.showOutput && validOutput 
 				? entity 
 				: CommandOutput.DUMMY,
-            entity.getPos(),
-            entity.getRotationClient(),
-            entity.getWorld() instanceof ServerWorld 
+			entity.getPos(),
+			entity.getRotationClient(),
+			entity.getWorld() instanceof ServerWorld 
 				? (ServerWorld) entity.getWorld() 
 				: null,
-            Apoli.config.executeCommand.permissionLevel,
-            entity.getName().getString(),
-            entity.getDisplayName(),
-            entity.getWorld().getServer(),
-            entity
+			Apoli.config.executeCommand.permissionLevel,
+			entity.getName().getString(),
+			entity.getDisplayName(),
+			entity.getWorld().getServer(),
+			entity
 		);
 
 		String commandString = data.getString("command");
@@ -58,7 +58,7 @@ public class VariableExecuteCommandAction {
 		return new ActionFactory<>(
 			OriginsMath.identifier("variable_execute_command"),
 			new SerializableData()
-	            .add("command", SerializableDataTypes.STRING)
+				.add("command", SerializableDataTypes.STRING)
 				.add("variables", VariableSerializer.SERIALIZABLE_DATATYPE, VariableSerializer.EMPTY),
 			VariableExecuteCommandAction::action
 		);

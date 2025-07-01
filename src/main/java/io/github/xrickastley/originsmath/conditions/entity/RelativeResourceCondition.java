@@ -24,7 +24,7 @@ public class RelativeResourceCondition {
 		} catch (Exception e) {
 			return false;
 		}
-    }
+	}
 
 	private static double getRelativeValue(Entity entity, PowerType<?> powerType) {
 		final ValueProvider<Power> provider = ValueProviders.getProviderOrThrow(powerType, entity);
@@ -33,14 +33,14 @@ public class RelativeResourceCondition {
 		return provider.VALUE_PROVIDER.apply(power) / provider.MAX_PROVIDER.apply(power);
 	}
 
-    public static ConditionFactory<Entity> getFactory() {
-        return new ConditionFactory<>(
-            OriginsMath.identifier("relative_resource"),
-            new SerializableData()
-                .add("resource", ApoliDataTypes.POWER_TYPE)
-                .add("comparison", ApoliDataTypes.COMPARISON)
-                .add("relativity", ResourceBacked.DataTypes.RESOURCE_BACKED_DOUBLE),
-            RelativeResourceCondition::condition
-        );
-    }
+	public static ConditionFactory<Entity> getFactory() {
+		return new ConditionFactory<>(
+			OriginsMath.identifier("relative_resource"),
+			new SerializableData()
+				.add("resource", ApoliDataTypes.POWER_TYPE)
+				.add("comparison", ApoliDataTypes.COMPARISON)
+				.add("relativity", ResourceBacked.DataTypes.RESOURCE_BACKED_DOUBLE),
+			RelativeResourceCondition::condition
+		);
+	}
 }

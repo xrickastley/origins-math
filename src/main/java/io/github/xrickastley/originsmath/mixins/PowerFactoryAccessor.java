@@ -17,5 +17,5 @@ import net.minecraft.entity.LivingEntity;
 @Mixin(PowerFactory.class)
 public interface PowerFactoryAccessor<P extends Power> {
 	@Accessor(remap = false)
-    public Function<SerializableData.Instance, BiFunction<PowerType<P>, LivingEntity, P>> getFactoryConstructor();
+	public Function<SerializableData.Instance, BiFunction<PowerType<P>, LivingEntity, P>> getFactoryConstructor();
 }

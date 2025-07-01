@@ -25,6 +25,7 @@ public class RequiresYACLScreen extends Screen {
 	public void render(DrawContext context, int mouseX, int mouseY, float delta) {
 		super.render(context, mouseX, mouseY, delta);
 
+		this.renderBackground(context);
 		this.drawCenteredText(context, text, 0xffffffff);
 	}
 

@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import io.github.apace100.calio.data.SerializableData;
 import io.github.xrickastley.originsmath.OriginsMath;
+import io.github.xrickastley.originsmath.config.OriginsMathConfig;
 import io.github.xrickastley.originsmath.interfaces.SDIEntityInjection;
 import io.github.xrickastley.originsmath.util.ResourceBacked;
 
@@ -52,7 +53,7 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 		remap = false
 	)
 	public <T> T injectResourceLinkToGet(T original) {
-		if (!(original instanceof final ResourceBacked rb)) 
+		if (!(original instanceof final ResourceBacked rb) || !OriginsMathConfig.Experiments.EXTENDED_COMPATIBILITY_THROUGH_ASM.getValue()) 
 			return original;
 
 		rb.setTargetEntity(originsmath$targetEntity);

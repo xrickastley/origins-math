@@ -18,6 +18,15 @@
 	"entrypoints": {
 		"main": [
 			"io.github.xrickastley.originsmath.OriginsMath"
+		],
+		"client": [
+			"io.github.xrickastley.originsmath.OriginsMathClient"
+		],
+		"server": [
+			"io.github.xrickastley.originsmath.OriginsMathServer"
+		],
+		"modmenu": [
+			"io.github.xrickastley.originsmath.config.OriginsMathModMenu"
 		]
 	},
 	"mixins": [

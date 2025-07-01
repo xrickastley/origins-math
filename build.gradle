@@ -71,6 +71,10 @@ repositories {
         name = "Modrinth"
         url = "https://api.modrinth.com/maven"
     }
+    maven {
+        name 'Xander Maven'
+        url 'https://maven.isxander.dev/releases'
+    }
 }
 
 loom {
@@ -102,6 +106,10 @@ dependencies {
 	// modImplementation "com.github.apace100:origins-fabric:${project.origins_version}"
 
 	include modImplementation ('org.mariuszgromada.math:MathParser.org-mXparser:6.0.0')
+
+	modImplementation ("maven.modrinth:yacl:${project.yacl_version}")
+
+	modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
 
 processResources {

@@ -23,6 +23,7 @@ public class OriginsMathPowers {
 		register(ModifyAttributeLikeResourcePower::createFactory);
 		register(ModifyResourceMaximumPower::createFactory);
 		register(ModifyResourceMinimumPower::createFactory);
+		register(NbtLinkedResourcePower::createFactory);
 		register(PlayerLinkedResourcePower::createFactory);
 		register(ScoreboardLinkedResourcePower::createFactory);
 		register(SimpleModifyingPower::createFactory);

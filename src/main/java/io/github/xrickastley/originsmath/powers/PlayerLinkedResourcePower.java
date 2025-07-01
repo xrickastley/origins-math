@@ -62,12 +62,6 @@ public class PlayerLinkedResourcePower extends SuppliedLinkedVariableIntPower<Pl
 			this.supplier = supplier;
 		}
 
-		public int supplyValue(PlayerEntity player) {
-			return supplier
-				.apply(player)
-				.intValue();
-		}
-
 		public Number supplyAsNumber(PlayerEntity player) {
 			return supplier.apply(player);
 		}

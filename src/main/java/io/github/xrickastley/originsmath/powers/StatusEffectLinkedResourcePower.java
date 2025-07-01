@@ -49,12 +49,6 @@ public class StatusEffectLinkedResourcePower extends SuppliedLinkedVariableIntPo
 			this.supplier = supplier;
 		}
 
-		public int supplyValue(StatusEffectInstance player) {
-			return supplier
-				.apply(player)
-				.intValue();
-		}
-
 		public Number supplyAsNumber(StatusEffectInstance player) {
 			return supplier.apply(player);
 		}

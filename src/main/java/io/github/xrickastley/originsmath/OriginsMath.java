@@ -15,7 +15,6 @@ import io.github.xrickastley.originsmath.util.OriginsMathModifierOperation;
 import io.github.xrickastley.originsmath.util.ResourceBackedInjector;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 
 public class OriginsMath implements ModInitializer {
@@ -39,7 +38,7 @@ public class OriginsMath implements ModInitializer {
 
 		NamespaceAlias.addAlias("origins-math", "apoli-math");
 
-		if (FabricLoader.getInstance().isModLoaded("yet_another_config_lib_v3")) OriginsMathSavedConfig.HANDLER.load();
+		OriginsMathSavedConfig.load();
 	}
 
 	public static Identifier identifier(String path) {

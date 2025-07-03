@@ -8,8 +8,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import org.jetbrains.annotations.Nullable;
-
 import dev.isxander.yacl3.api.Binding;
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
@@ -17,7 +15,6 @@ import dev.isxander.yacl3.api.OptionDescription;
 import dev.isxander.yacl3.api.StateManager;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
@@ -88,7 +85,7 @@ public class OriginsMathConfig {
 	public static class Entry<T> {
 		private static final List<Entry<?>> INSTANCES = new ArrayList<>();
 		private final String name;
-		private final @Nullable EntryLoader<T> loader;
+		private final EntryLoader<T> loader;
 		private T defaultValue;
 		private T value;
 		private boolean byServer = false;
@@ -101,7 +98,7 @@ public class OriginsMathConfig {
 			this(name, defaultValue, null);
 		}
 
-		private Entry(final String name, T defaultValue, final @Nullable EntryLoader<T> loader) {
+		private Entry(final String name, T defaultValue, EntryLoader<T> loader) {
 			this.name = name;
 			this.loader = loader;
 			this.defaultValue = defaultValue;
@@ -156,15 +153,13 @@ public class OriginsMathConfig {
 		}
 
 		public static <T> EntryLoader<T> of(BiConsumer<OriginsMathSavedConfig, T> saveFn, Function<OriginsMathSavedConfig, T> loadFn) {
-			return FabricLoader.getInstance().isModLoaded("yet_another_config_lib_v3")
-				? new EntryLoader<T>(
-					v -> saveFn
-						.andThen((c, _v) -> OriginsMathSavedConfig.HANDLER.save())
-						.accept(OriginsMathSavedConfig.HANDLER.instance(), v),
-					() -> loadFn
-						.apply(OriginsMathSavedConfig.HANDLER.instance())
-				)
-				: null;
+			return new EntryLoader<T>(
+				v -> saveFn
+					.andThen((c, _v) -> OriginsMathSavedConfig.save())
+					.accept(OriginsMathSavedConfig.instance(), v),
+				() -> loadFn
+					.apply(OriginsMathSavedConfig.instance())
+			);
 		}
 	}
 }

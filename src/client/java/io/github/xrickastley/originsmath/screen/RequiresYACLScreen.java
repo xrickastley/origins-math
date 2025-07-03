@@ -27,6 +27,7 @@ public class RequiresYACLScreen extends Screen {
 
 		this.renderBackground(context);
 		this.drawCenteredText(context, text, 0xffffffff);
+		this.renderBackgroundTexture(context);
 	}
 
 	@Override

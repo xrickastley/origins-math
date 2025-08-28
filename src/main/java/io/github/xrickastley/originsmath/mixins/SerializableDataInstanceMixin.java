@@ -22,10 +22,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import io.github.apace100.apoli.util.HudRender;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.config.OriginsMathConfig;
 import io.github.xrickastley.originsmath.interfaces.SDIEntityInjection;
+import io.github.xrickastley.originsmath.util.ClassInstanceUtil;
+import io.github.xrickastley.originsmath.util.OriginsMathHudRender;
 import io.github.xrickastley.originsmath.util.ResourceBacked;
 
 import net.minecraft.entity.Entity;
@@ -68,6 +71,22 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 		} catch (Exception e) {
 			return original;
 		}
+	}
+	
+	@Inject(
+		method = "get",
+		at = @At("HEAD"),
+		remap = false,
+		cancellable = true
+	)
+	public <T> void replaceWithOriginsMathHUD(String name, CallbackInfoReturnable<T> cir) {
+		if (!(data.get(name) instanceof HudRender)) return;
+
+		if (!(data.get("origins-math:" + name) instanceof final OriginsMathHudRender hudRender)) return;
+
+		hudRender.setTargetEntity(originsmath$targetEntity);
+
+		cir.setReturnValue(ClassInstanceUtil.castInstance(hudRender));
 	}
 
 	@SuppressWarnings("unchecked")

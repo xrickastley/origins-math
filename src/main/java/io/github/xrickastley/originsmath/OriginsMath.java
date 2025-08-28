@@ -11,6 +11,7 @@ import io.github.xrickastley.originsmath.factories.OriginsMathCommands;
 import io.github.xrickastley.originsmath.factories.OriginsMathEntityActions;
 import io.github.xrickastley.originsmath.factories.OriginsMathEntityConditions;
 import io.github.xrickastley.originsmath.factories.OriginsMathPowers;
+import io.github.xrickastley.originsmath.util.CustomHudRenderInjector;
 import io.github.xrickastley.originsmath.util.OriginsMathModifierOperation;
 import io.github.xrickastley.originsmath.util.ResourceBackedInjector;
 
@@ -35,6 +36,7 @@ public class OriginsMath implements ModInitializer {
 		OriginsMathModifierOperation.register();
 		
 		ResourceBackedInjector.applyInjections();
+		CustomHudRenderInjector.applyInjections();
 
 		IdentifierAlias.addNamespaceAlias("origins-math", "apoli-math");
 

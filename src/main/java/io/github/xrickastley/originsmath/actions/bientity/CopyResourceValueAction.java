@@ -9,6 +9,7 @@ import io.github.apace100.apoli.util.ResourceOperation;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.util.ValueProviders;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Pair;
 

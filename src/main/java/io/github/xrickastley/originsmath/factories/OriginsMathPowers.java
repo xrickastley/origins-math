@@ -21,6 +21,7 @@ public class OriginsMathPowers {
 		register(MathResourcePower::createFactory);
 		register(ModifiableResourcePower::createFactory);
 		register(ModifyAttributeLikeResourcePower::createFactory);
+		register(ModifyKnockbackPower::createFactory);
 		register(ModifyResourceMaximumPower::createFactory);
 		register(ModifyResourceMinimumPower::createFactory);
 		register(NbtLinkedResourcePower::createFactory);

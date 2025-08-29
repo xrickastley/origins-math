@@ -6,7 +6,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 import io.github.apace100.apoli.power.factory.action.ActionFactory;
-
 import io.github.apace100.calio.data.SerializableData;
 
 @Mixin(ActionFactory.class)

@@ -3,6 +3,7 @@ package io.github.xrickastley.originsmath;
 import org.slf4j.Logger;
 
 import io.github.xrickastley.originsmath.networking.s2c.SyncRequiredConfigPacket;
+
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

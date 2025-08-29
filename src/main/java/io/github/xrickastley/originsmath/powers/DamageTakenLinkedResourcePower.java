@@ -1,23 +1,32 @@
 package io.github.xrickastley.originsmath.powers;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import io.github.apace100.apoli.data.ApoliDataTypes;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.factory.PowerFactory;
+import io.github.apace100.apoli.util.modifier.Modifier;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataTypes;
 import io.github.xrickastley.originsmath.OriginsMath;
+import io.github.xrickastley.originsmath.powers.interfaces.ModifyingPower;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.util.Pair;
 
-public class DamageTakenLinkedResourcePower extends TimedLinkedVariableIntPower<Pair<DamageSource, Float>> {
+public class DamageTakenLinkedResourcePower 
+	extends TimedLinkedVariableIntPower<Pair<DamageSource, Float>>
+	implements ModifyingPower
+{
 	private final Predicate<Pair<DamageSource, Float>> damageCondition; 
 	private final Consumer<Pair<Entity, Entity>> bientityAction;
+    private final List<Modifier> modifiers = new LinkedList<>();
 
 	private DamageTakenLinkedResourcePower(PowerType<?> type, LivingEntity entity, int duration, Predicate<Pair<DamageSource, Float>> damageCondition, Consumer<Pair<Entity, Entity>> bientityAction) {
 		super(type, entity, duration, pair -> pair.getRight());
@@ -46,20 +55,33 @@ public class DamageTakenLinkedResourcePower extends TimedLinkedVariableIntPower<
 		if (bientityAction != null) this.bientityAction.accept(new Pair<>(this.entity, source.getAttacker()));
 	}
 
+	private DamageTakenLinkedResourcePower addModifiers(SerializableData.Instance dataInst) {
+		dataInst.<Modifier>ifPresent("modifier", modifiers::add);
+		dataInst.<List<Modifier>>ifPresent("modifiers", modifiers::addAll);
+
+		return this;
+	}
+
+	public List<Modifier> getModifiers() {
+		return Collections.unmodifiableList(this.modifiers);
+	}
+
 	public static PowerFactory<?> createFactory() {
 		return new PowerFactory<>(
 			OriginsMath.identifier("damage_taken_linked_resource"),
 			new SerializableData()
 				.add("duration", SerializableDataTypes.INT, Integer.MAX_VALUE)
 				.add("damage_condition", ApoliDataTypes.DAMAGE_CONDITION, null)
-				.add("bientity_action", ApoliDataTypes.BIENTITY_ACTION, null),
+				.add("bientity_action", ApoliDataTypes.BIENTITY_ACTION, null)
+                .add("modifier", Modifier.DATA_TYPE, null)
+                .add("modifiers", Modifier.LIST_TYPE, null),
 			data -> (powerType, livingEntity) -> new DamageTakenLinkedResourcePower(
 				powerType,
 				livingEntity,
 				data.getInt("duration"),
 				data.get("damage_condition"),
 				data.get("bientity_action")
-			)
+			).addModifiers(data)
 		);
 	}
 }

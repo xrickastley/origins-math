@@ -6,6 +6,7 @@
 		"ActionFactoryAccessor",
 		"BiomeAccessor",
 		"ConditionFactoryAccessor",
+		"HudRenderAccessor",
 		"LivingEntityMixin",
 		"PlayerEntityMixin",
 		"PowerFactoryAccessor",

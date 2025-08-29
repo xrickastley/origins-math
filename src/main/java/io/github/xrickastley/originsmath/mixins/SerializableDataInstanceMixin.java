@@ -80,13 +80,24 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 		cancellable = true
 	)
 	public <T> void replaceWithOriginsMathHUD(String name, CallbackInfoReturnable<T> cir) {
+		if (!OriginsMathConfig.Experiments.EXTENDED_COMPATIBILITY_THROUGH_ASM.getValue()) return;
+
 		if (!(data.get(name) instanceof HudRender)) return;
+		
+		final StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+		
+		if (this.originsmath$isWriteMethod(stackTrace[5]) || this.originsmath$isWriteMethod(stackTrace[6])) return;
 
 		if (!(data.get("origins-math:" + name) instanceof final OriginsMathHudRender hudRender)) return;
 
 		hudRender.setTargetEntity(originsmath$targetEntity);
 
 		cir.setReturnValue(ClassInstanceUtil.castInstance(hudRender));
+	}
+
+	private boolean originsmath$isWriteMethod(StackTraceElement element) {
+		return element.getClassName().equals("io.github.apace100.calio.data.SerializableData")
+			&& element.getMethodName().equals("write");
 	}
 
 	@SuppressWarnings("unchecked")

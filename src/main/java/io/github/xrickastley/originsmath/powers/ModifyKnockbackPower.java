@@ -64,8 +64,6 @@ public class ModifyKnockbackPower extends Power {
 			.<Modifier>mapMulti((power, consumer) -> power.getModifiers(axis).forEach(consumer))
 			.toList();
 
-		OriginsMath.LOGGER.info("Axis: {} | Modifiers: {} | Original: {} | Result: {}", axis, modifiers, original, ModifierUtil.applyModifiers(entity, modifiers, original));
-
 		return ModifierUtil.applyModifiers(entity, modifiers, original);
 	}
 

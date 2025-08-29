@@ -68,6 +68,10 @@ public class CustomHudRenderInjector {
 		for (final String field : hudRenderFields) data.add(field, OriginsMathHudRender.DATA_TYPE, null);
 
 		CustomHudRenderInjector.injectToFactoryConstructor(factory);
+
+		OriginsMath
+			.sublogger(CustomHudRenderInjector.class)
+			.info("Created custom HUD render fields ({}) for {}", hudRenderFields, factory.getSerializerId());
 	}
 
 	@SuppressWarnings("unchecked")

@@ -39,5 +39,12 @@
 		"java": ">=17",
 		"fabric-api": "*",
 		"origins": ">=1.10.0"
+	},
+	"custom": {
+		"loom:injected_interfaces": {
+			"io/github/apace100/apoli/power/ValueModifyingPower": [
+				"io/github/xrickastley/originsmath/powers/interfaces/ModifyingPower"
+			]
+		}
 	}
 }

@@ -1,9 +1,9 @@
 package io.github.xrickastley.originsmath.powers;
 
-import org.slf4j.Logger;
-
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+
+import org.slf4j.Logger;
 
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.factory.PowerFactory;
@@ -12,9 +12,10 @@ import io.github.apace100.calio.data.SerializableDataType;
 import io.github.apace100.calio.data.SerializableDataTypes;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.mixins.DataCommandAccess;
+
 import net.minecraft.command.EntityDataObject;
-import net.minecraft.command.argument.NbtPathArgumentType;
 import net.minecraft.command.argument.NbtPathArgumentType.NbtPath;
+import net.minecraft.command.argument.NbtPathArgumentType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.AbstractNbtNumber;
 import net.minecraft.nbt.NbtElement;

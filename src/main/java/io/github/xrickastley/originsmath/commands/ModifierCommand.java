@@ -11,8 +11,9 @@ import io.github.apace100.apoli.command.PowerTypeArgumentType;
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
-import io.github.apace100.apoli.power.ValueModifyingPower;
 import io.github.apace100.apoli.util.modifier.ModifierUtil;
+import io.github.xrickastley.originsmath.powers.interfaces.ModifyingPower;
+
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.CommandManager;
@@ -64,7 +65,7 @@ public class ModifierCommand {
 			return 0;
 		}
 
-		if (!(power instanceof final ValueModifyingPower vmp)) {
+		if (!(power instanceof final ModifyingPower mp)) {
 			final Text errorText = Text.of(String.format("Power type %s isn't a valid modifying power!", powerType.getIdentifier()));
 			errorText.getStyle().withColor(Formatting.RED);
 
@@ -75,7 +76,7 @@ public class ModifierCommand {
 
 		final DecimalFormat df = new DecimalFormat("#.#####");
 
-		source.sendFeedback(() -> Text.of(String.format("Applied Modifier: %s\nBase value: %s\nModifier Result: %s", powerType.getIdentifier().toString(), df.format(base), df.format(ModifierUtil.applyModifiers(target, vmp.getModifiers(), base)))), false);
+		source.sendFeedback(() -> Text.of(String.format("Applied Modifier: %s\nBase value: %s\nModifier Result: %s", powerType.getIdentifier().toString(), df.format(base), df.format(ModifierUtil.applyModifiers(target, mp.getModifiers(), base)))), false);
 
 		return 1;
 	}

@@ -2,6 +2,7 @@ package io.github.xrickastley.originsmath.networking.s2c;
 
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.config.OriginsMathConfig;
+
 import net.fabricmc.fabric.api.networking.v1.FabricPacket;
 import net.fabricmc.fabric.api.networking.v1.PacketType;
 import net.minecraft.network.PacketByteBuf;

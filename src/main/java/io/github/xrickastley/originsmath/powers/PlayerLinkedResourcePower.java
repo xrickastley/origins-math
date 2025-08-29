@@ -11,6 +11,7 @@ import io.github.xrickastley.originsmath.util.InstanceValueSupplier;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.LightType;
 
 public class PlayerLinkedResourcePower extends SuppliedLinkedVariableIntPower<PlayerEntity> {
 	private PlayerLinkedResourcePower(PowerType<?> type, LivingEntity entity, PlayerProperty property) {
@@ -29,32 +30,37 @@ public class PlayerLinkedResourcePower extends SuppliedLinkedVariableIntPower<Pl
 	private static final SerializableDataType<PlayerProperty> PLAYER_PROPERTY = SerializableDataType.enumValue(PlayerProperty.class);
 
 	private static enum PlayerProperty implements InstanceValueSupplier<PlayerEntity> {
-		FOOD_LEVEL		(player -> player.getHungerManager().getFoodLevel()),
-		SATURATION		(player -> player.getHungerManager().getSaturationLevel()),
-		HEALTH			(player -> player.getHealth()),
-		RELATIVE_HEALTH	(player -> player.getHealth() / player.getMaxHealth()),
-		ABSORPTION		(player -> player.getAbsorptionAmount()),
-		BREATHING		(player -> player.getAir()),
-		FIRE_TICKS		(player -> player.getFireTicks()),
-		FROZEN_TICKS	(player -> player.getFrozenTicks()),
-		FREEZING_SCALE	(player -> player.getFreezingScale()),
-		EXP_LEVEL		(player -> player.experienceLevel),
-		EXP_POINTS		(player -> player.totalExperience),
-		EXP_SCORE		(player -> player.getScore()),
-		SLEEP_TIMER		(player -> player.getSleepTimer()),
-		STUCK_ARROWS	(player -> player.getStuckArrowCount()),
-		FALL_DISTANCE	(player -> player.fallDistance),
-		TIME_OF_DAY		(player -> player.getWorld().getTimeOfDay() % 24000L),
-		AGE				(player -> player.age),
-		X				(player -> player.getX()),
-		Y				(player -> player.getY()),
-		Z				(player -> player.getZ()),
-		VELOCITY_X		(player -> player.getVelocity().getX()),
-		VELOCITY_Y		(player -> player.getVelocity().getY()),
-		VELOCITY_Z		(player -> player.getVelocity().getZ()),
-		PITCH			(player -> player.getPitch()),
-		YAW				(player -> player.getYaw()),
-		ROLL			(player -> player.getRoll());
+		FOOD_LEVEL			(player -> player.getHungerManager().getFoodLevel()),
+		SATURATION			(player -> player.getHungerManager().getSaturationLevel()),
+		HEALTH				(player -> player.getHealth()),
+		RELATIVE_HEALTH		(player -> player.getHealth() / player.getMaxHealth()),
+		ABSORPTION			(player -> player.getAbsorptionAmount()),
+		BREATHING			(player -> player.getAir()),
+		FIRE_TICKS			(player -> player.getFireTicks()),
+		FROZEN_TICKS		(player -> player.getFrozenTicks()),
+		FREEZING_SCALE		(player -> player.getFreezingScale()),
+		EXP_LEVEL			(player -> player.experienceLevel),
+		EXP_POINTS			(player -> player.totalExperience),
+		EXP_SCORE			(player -> player.getScore()),
+		SLEEP_TIMER			(player -> player.getSleepTimer()),
+		STUCK_ARROWS		(player -> player.getStuckArrowCount()),
+		FALL_DISTANCE		(player -> player.fallDistance),
+		TIME_OF_DAY			(player -> player.getWorld().getTimeOfDay() % 24000L),
+		TIME				(entity -> entity.getWorld().getTime()),
+		LUNAR_TIME			(entity -> entity.getWorld().getLunarTime()),
+		LIGHT_LEVEL			(entity -> entity.getWorld().getLightLevel(entity.getBlockPos())),
+		BLOCK_LIGHT_LEVEL	(entity -> entity.getWorld().getLightLevel(LightType.BLOCK, entity.getBlockPos())),
+		SKY_LIGHT_LEVEL		(entity -> entity.getWorld().getLightLevel(LightType.SKY, entity.getBlockPos())),
+		AGE					(player -> player.age),
+		X					(player -> player.getX()),
+		Y					(player -> player.getY()),
+		Z					(player -> player.getZ()),
+		VELOCITY_X			(player -> player.getVelocity().getX()),
+		VELOCITY_Y			(player -> player.getVelocity().getY()),
+		VELOCITY_Z			(player -> player.getVelocity().getZ()),
+		PITCH				(player -> player.getPitch()),
+		YAW					(player -> player.getYaw()),
+		ROLL				(player -> player.getRoll());
 
 		private final Function<PlayerEntity, Number> supplier;
 

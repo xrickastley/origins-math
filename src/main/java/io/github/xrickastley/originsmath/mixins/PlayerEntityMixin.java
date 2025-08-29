@@ -1,7 +1,10 @@
 package io.github.xrickastley.originsmath.mixins;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
 import com.mojang.authlib.GameProfile;
+
+import java.util.List;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -9,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
+import io.github.apace100.apoli.util.modifier.Modifier;
+import io.github.apace100.apoli.util.modifier.ModifierUtil;
 import io.github.xrickastley.originsmath.powers.DamageDealtLinkedResourcePower;
 import io.github.xrickastley.originsmath.powers.DamageTakenLinkedResourcePower;
 
@@ -31,17 +36,31 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 		method = "applyDamage",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/entity/player/PlayerEntity;getAbsorptionAmount()F",
-			ordinal = 0
+			target = "Lnet/minecraft/entity/player/PlayerEntity;modifyAppliedDamage(Lnet/minecraft/entity/damage/DamageSource;F)F",
+			shift = At.Shift.AFTER
 		)
 	)
-	private void updateDamageResourcePowers(DamageSource source, float amount, CallbackInfo ci, @Local(ordinal = 1) float finalDMG) {
-		PowerHolderComponent
-			.getPowers(source.getAttacker(), DamageDealtLinkedResourcePower.class)
-			.forEach(power -> power.setDamageData(source, finalDMG, this));
+	private void updateDamageResourcePowers(DamageSource source, float _amount, CallbackInfo ci, @Local(argsOnly = true) LocalFloatRef amount) {
+		final List<DamageDealtLinkedResourcePower> dmgDealtLinked = PowerHolderComponent.getPowers(source.getAttacker(), DamageDealtLinkedResourcePower.class);
+		final List<DamageTakenLinkedResourcePower> dmgTakenLinked = PowerHolderComponent.getPowers(this, DamageTakenLinkedResourcePower.class);
 
-		PowerHolderComponent
-			.getPowers(this, DamageTakenLinkedResourcePower.class)
-			.forEach(power -> power.setDamageData(source, finalDMG));
+		dmgDealtLinked.forEach(power -> power.setDamageData(source, amount.get(), this));
+		dmgTakenLinked.forEach(power -> power.setDamageData(source, amount.get()));
+
+		final List<Modifier> dmgDealtModifiers = dmgDealtLinked
+			.stream()
+			.<Modifier>mapMulti((power, consumer) -> power.getModifiers().forEach(consumer))
+			.toList();
+
+		double finalAmount = ModifierUtil.applyModifiers(source.getAttacker(), dmgDealtModifiers, amount.get());
+
+		final List<Modifier> dmgTakenModifiers = dmgTakenLinked
+			.stream()
+			.<Modifier>mapMulti((power, consumer) -> power.getModifiers().forEach(consumer))
+			.toList();
+
+		finalAmount = ModifierUtil.applyModifiers(this, dmgTakenModifiers, finalAmount);
+
+		amount.set((float) finalAmount);
 	}
 }

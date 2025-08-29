@@ -71,9 +71,9 @@ public class ModifyKnockbackPower extends Power {
 		return new PowerFactory<>(
 			OriginsMath.identifier("modify_knockback"),
 			new SerializableData()
-                .add("x", Modifier.LIST_TYPE, null)
-                .add("y", Modifier.LIST_TYPE, null)
-                .add("z", Modifier.LIST_TYPE, null),
+                .add("x", Modifier.LIST_TYPE, Collections.emptyList())
+                .add("y", Modifier.LIST_TYPE, Collections.emptyList())
+                .add("z", Modifier.LIST_TYPE, Collections.emptyList()),
 			data -> (powerType, livingEntity) -> new ModifyKnockbackPower(
 				powerType,
 				livingEntity,

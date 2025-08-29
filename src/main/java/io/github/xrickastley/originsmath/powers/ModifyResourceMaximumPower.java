@@ -15,6 +15,6 @@ public class ModifyResourceMaximumPower extends ResourceModifyingPower {
 		return ResourceModifyingPower.createResourceModifyingFactory(
 			OriginsMath.identifier("modify_resource_maximum"),
 			ModifyResourceMaximumPower::new
-		);
+		).allowCondition();
 	}
 }

@@ -83,6 +83,6 @@ public class DamageDealtLinkedResourcePower
 				data.get("damage_condition"),
 				data.get("bientity_action")
 			).addModifiers(data)
-		);
+		).allowCondition();
 	}
 }

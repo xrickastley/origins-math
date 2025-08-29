@@ -15,6 +15,6 @@ public class ModifyResourceMinimumPower extends ResourceModifyingPower {
 		return ResourceModifyingPower.createResourceModifyingFactory(
 			OriginsMath.identifier("modify_resource_minimum"),
 			ModifyResourceMinimumPower::new
-		);
+		).allowCondition();
 	}
 }

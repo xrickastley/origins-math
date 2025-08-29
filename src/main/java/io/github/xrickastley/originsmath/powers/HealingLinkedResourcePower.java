@@ -47,6 +47,6 @@ public class HealingLinkedResourcePower extends TimedLinkedVariableIntPower<Floa
 				data.getInt("duration"),
 				data.get("entity_action")
 			)
-		);
+		).allowCondition();
 	}
 }

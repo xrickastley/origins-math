@@ -5,7 +5,6 @@ import com.llamalad7.mixinextras.sugar.ref.LocalFloatRef;
 
 import java.util.List;
 
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.apoli.util.modifier.Modifier;
 import io.github.apace100.apoli.util.modifier.ModifierUtil;
+import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.powers.DamageDealtLinkedResourcePower;
 import io.github.xrickastley.originsmath.powers.DamageTakenLinkedResourcePower;
 import io.github.xrickastley.originsmath.powers.HealingLinkedResourcePower;
@@ -29,7 +29,6 @@ import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.world.World;
 
 @Mixin(LivingEntity.class)
-@Debug(export = true)
 public abstract class LivingEntityMixin extends Entity {
 	public LivingEntityMixin(final EntityType<?> type, final World world) {
 		super(type, world);
@@ -40,9 +39,8 @@ public abstract class LivingEntityMixin extends Entity {
 	@Inject(
 		method = "applyDamage",
 		at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/entity/LivingEntity;modifyAppliedDamage(Lnet/minecraft/entity/damage/DamageSource;F)F",
-			shift = At.Shift.AFTER
+			value = "INVOKE_ASSIGN",
+			target = "Lnet/minecraft/entity/LivingEntity;modifyAppliedDamage(Lnet/minecraft/entity/damage/DamageSource;F)F"
 		)
 	)
 	private void updateDamageResourcePowers(DamageSource source, float _amount, CallbackInfo ci, @Local(argsOnly = true) LocalFloatRef amount) {
@@ -57,12 +55,16 @@ public abstract class LivingEntityMixin extends Entity {
 			.<Modifier>mapMulti((power, consumer) -> power.getModifiers().forEach(consumer))
 			.toList();
 
+		OriginsMath.LOGGER.info("DMG Dealt Modifiers: {}", dmgDealtModifiers);
+
 		double finalAmount = ModifierUtil.applyModifiers(source.getAttacker(), dmgDealtModifiers, amount.get());
 
 		final List<Modifier> dmgTakenModifiers = dmgTakenLinked
 			.stream()
 			.<Modifier>mapMulti((power, consumer) -> power.getModifiers().forEach(consumer))
 			.toList();
+
+		OriginsMath.LOGGER.info("DMG Taken Modifiers: {}", dmgTakenModifiers);
 
 		finalAmount = ModifierUtil.applyModifiers(this, dmgTakenModifiers, finalAmount);
 

@@ -21,8 +21,6 @@ public class OriginsMathEntityConditions {
 	}
 
 	private static ConditionFactory<Entity> register(ConditionFactory<Entity> conditionFactory) {
-		if (ApoliRegistries.ENTITY_CONDITION.containsId(conditionFactory.getSerializerId())) return ApoliRegistries.ENTITY_CONDITION.get(conditionFactory.getSerializerId());
-
 		return Registry.register(ApoliRegistries.ENTITY_CONDITION, conditionFactory.getSerializerId(), conditionFactory);
 	}
 	

@@ -40,8 +40,6 @@ public class OriginsMathPowers {
 	}
 
 	private static PowerFactory<?> register(PowerFactory<?> powerFactory) {
-		if (ApoliRegistries.POWER_FACTORY.containsId(powerFactory.getSerializerId())) return ApoliRegistries.POWER_FACTORY.get(powerFactory.getSerializerId());
-
 		return Registry.register(ApoliRegistries.POWER_FACTORY, powerFactory.getSerializerId(), powerFactory);
 	}
 }

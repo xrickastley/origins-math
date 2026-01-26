@@ -290,7 +290,7 @@ public class ValueProviders {
 
 		ValueProviders.registerModifier(
 			CooldownPower.class,
-			new ValueModifier<>((p, v) -> p.modify(v.intValue()), (p, v) -> p.setCooldown(v.intValue()))
+			new ValueModifier<>((p, v) -> p.setCooldown(v.intValue()), (p, v) -> p.modify(v.intValue()))
 		);
 	}
 

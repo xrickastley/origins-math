@@ -24,7 +24,7 @@ public class ChangeResourceAction {
 
 		ValueProviders
 			.getModifierOrThrow(powerType, entity)
-			.modify(operation, powerType, entity, change);
+			.modify(operation, powerType, entity, change.setTargetEntity(entity));
 
 		PowerHolderComponent.syncPower(entity, powerType);
 	}

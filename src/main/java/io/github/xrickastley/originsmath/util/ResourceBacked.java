@@ -54,8 +54,10 @@ public class ResourceBacked<T extends Number>
 				: 0;
 	}
 
-	public void setTargetEntity(Entity entity) {
+	public ResourceBacked<T> setTargetEntity(Entity entity) {
 		this.targetEntity = entity;
+
+		return this;
 	}
 
 	@Override

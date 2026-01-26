@@ -27,8 +27,6 @@ public class OriginsMathBientityActions {
 	}
 
 	private static ActionFactory<Pair<Entity, Entity>> register(ActionFactory<Pair<Entity, Entity>> actionFactory) {
-		if (ApoliRegistries.BIENTITY_ACTION.containsId(actionFactory.getSerializerId())) return ApoliRegistries.BIENTITY_ACTION.get(actionFactory.getSerializerId());
-
 		return Registry.register(ApoliRegistries.BIENTITY_ACTION, actionFactory.getSerializerId(), actionFactory);
 	}
 }

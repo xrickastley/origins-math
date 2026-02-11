@@ -55,16 +55,12 @@ public abstract class LivingEntityMixin extends Entity {
 			.<Modifier>mapMulti((power, consumer) -> power.getModifiers().forEach(consumer))
 			.toList();
 
-		OriginsMath.LOGGER.info("DMG Dealt Modifiers: {}", dmgDealtModifiers);
-
 		double finalAmount = ModifierUtil.applyModifiers(source.getAttacker(), dmgDealtModifiers, amount.get());
 
 		final List<Modifier> dmgTakenModifiers = dmgTakenLinked
 			.stream()
 			.<Modifier>mapMulti((power, consumer) -> power.getModifiers().forEach(consumer))
 			.toList();
-
-		OriginsMath.LOGGER.info("DMG Taken Modifiers: {}", dmgTakenModifiers);
 
 		finalAmount = ModifierUtil.applyModifiers(this, dmgTakenModifiers, finalAmount);
 

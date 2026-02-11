@@ -52,8 +52,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 			.<Modifier>mapMulti((power, consumer) -> power.getModifiers().forEach(consumer))
 			.toList();
 
-		OriginsMath.LOGGER.info("DMG Dealt Modifiers: {}", dmgDealtModifiers);
-
 		double finalAmount = ModifierUtil.applyModifiers(source.getAttacker(), dmgDealtModifiers, amount.get());
 
 		final List<Modifier> dmgTakenModifiers = dmgTakenLinked
@@ -61,11 +59,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 			.<Modifier>mapMulti((power, consumer) -> power.getModifiers().forEach(consumer))
 			.toList();
 
-		OriginsMath.LOGGER.info("DMG Taken Modifiers: {}", dmgTakenModifiers);
-
 		finalAmount = ModifierUtil.applyModifiers(this, dmgTakenModifiers, finalAmount);
-
-		OriginsMath.LOGGER.info("Final amount: {}", finalAmount);
 
 		amount.set((float) finalAmount);
 	}

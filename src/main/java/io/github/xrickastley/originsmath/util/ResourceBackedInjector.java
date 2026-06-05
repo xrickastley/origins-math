@@ -1,10 +1,14 @@
 package io.github.xrickastley.originsmath.util;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
+
+import org.jetbrains.annotations.ApiStatus;
 
 import io.github.apace100.apoli.access.EntityLinkedItemStack;
 import io.github.apace100.apoli.power.factory.Factory;
@@ -38,17 +42,16 @@ import net.minecraft.world.World;
  */
 @SuppressWarnings("unchecked")
 public class ResourceBackedInjector {
-	private static final ArrayList<Pair<Registry<? extends Factory>, BiFunction<? extends Factory, SerializableData, ? extends Factory>>> INJECTIONS = new ArrayList<>();
+	private static final Map<Registry<? extends Factory>, BiFunction<? extends Factory, SerializableData, ? extends Factory>> INJECTIONS = new HashMap<>();
 
 	/**
 	 * Applies and clears all currently registered factory registry injections. 
 	 */
 	public static void applyInjections() {
-		INJECTIONS
+		ResourceBackedInjector.INJECTIONS
+			.entrySet()
 			.stream()
-			.forEach(pair -> injectToFactoryRegistry(ClassInstanceUtil.castInstance(pair.getLeft()), ClassInstanceUtil.castInstance(pair.getRight())));
-
-		INJECTIONS.clear();
+			.forEach(entry -> ResourceBackedInjector.injectToFactoryRegistry(ClassInstanceUtil.castInstance(entry.getKey()), ClassInstanceUtil.castInstance(entry.getValue())));
 	}
 
 	/**
@@ -58,7 +61,17 @@ public class ResourceBackedInjector {
 	 * @param transformationFunction The transformation function that takes the old {@link Factory} and the injected {@link SerializableData} and returns the "Resource-backed factory".
 	 */
 	public static <T extends Factory> void createFactoryInjection(final Registry<T> factoryRegistry, BiFunction<T, SerializableData, T> transformationFunction) {
-		INJECTIONS.add(new Pair<>(factoryRegistry, transformationFunction));
+		if (ResourceBackedInjector.INJECTIONS.containsKey(factoryRegistry))
+			throw new IllegalStateException("An injection already exists for the factory registry: " + factoryRegistry.toString());
+
+		ResourceBackedInjector.INJECTIONS.put(factoryRegistry, transformationFunction);
+	}
+
+	@ApiStatus.Internal
+	public static <T extends Factory> T applyPossibleFactoryInjection(final Registry<T> factoryRegistry, final T targetFactory) {
+		return Optional.of(ResourceBackedInjector.INJECTIONS.get(factoryRegistry))
+			.<T>map(transformationFunction -> (T) transformationFunction.apply(ClassInstanceUtil.castInstance(targetFactory), targetFactory.getSerializableData()))
+			.orElse(targetFactory);
 	}
 
 	/**
@@ -72,7 +85,7 @@ public class ResourceBackedInjector {
 			// Avoid creating duplicates.
 			if (factory.getSerializerId().getNamespace().equals("origins-math")) return;
 
-			if (!shouldCreateInjection(factory.getSerializableData())) {
+			if (!ResourceBackedInjector.shouldCreateInjection(factory.getSerializableData())) {
 				OriginsMath
 					.sublogger(ResourceBackedInjector.class)
 					.info("Cancelling creation of ResourceBacked factory for {} (same SerializableData instances)", factory.getSerializerId());

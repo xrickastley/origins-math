@@ -14,6 +14,7 @@ import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.actions.meta.ForRangeAction;
 import io.github.xrickastley.originsmath.actions.meta.WhileAction;
 import io.github.xrickastley.originsmath.util.ClassInstanceUtil;
+import io.github.xrickastley.originsmath.util.ResourceBackedInjector;
 
 import net.minecraft.block.pattern.CachedBlockPosition;
 import net.minecraft.entity.Entity;
@@ -102,7 +103,7 @@ public class OriginsMathMetaActions {
 		}
 
 		private ActionFactory<A> register(Function<MetaActionContext<A, C>, ActionFactory<A>> factorySupplier) {
-			final ActionFactory<A> actionFactory = factorySupplier.apply(this);
+			final ActionFactory<A> actionFactory = ResourceBackedInjector.applyPossibleFactoryInjection(this.registry, factorySupplier.apply(this));
 
 			return Registry.register(this.registry, actionFactory.getSerializerId(), actionFactory);
 		}

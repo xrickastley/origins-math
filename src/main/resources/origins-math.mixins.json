@@ -11,7 +11,8 @@
 		"PowerFactoryAccessor",
 		"SerializableDataAccessor",
 		"SerializableDataFieldAccessor",
-		"SerializableDataInstanceMixin"
+		"SerializableDataInstanceMixin",
+		"ValueModifyingPowerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

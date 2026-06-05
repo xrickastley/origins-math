@@ -28,7 +28,7 @@ public class VariableSerializer {
 		VariableSerializer::read
 	);
 	
-	private static final Pattern VARIABLE_REGEX = Pattern.compile("[a-zA-z][a-zA-Z0-9_]*");
+	static final Pattern VARIABLE_REGEX = Pattern.compile("[a-zA-Z_][a-zA-Z0-9_]*");
 	private final HashMap<String, PowerType<?>> variableMap = new HashMap<>();
 	
 	private static void send(PacketByteBuf packet, VariableSerializer serializer) {

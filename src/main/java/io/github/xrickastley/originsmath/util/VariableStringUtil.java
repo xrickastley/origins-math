@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import net.minecraft.entity.Entity;
 
 public final class VariableStringUtil {
-	private static final Pattern JAVASCRIPT_INTERPOLATION_PATTERN = Pattern.compile("([A-z][A-z0-9_]*)(:%(?:d|\\.([0-9])f)(?!.))?");
+	private static final Pattern JAVASCRIPT_INTERPOLATION_PATTERN = Pattern.compile("([a-zA-Z_][a-zA-Z0-9_]*)(:%(?:d|\\.([0-9])f)(?!.))?");
 
 	public static String parse(String variableString, VariableSerializer variableSerializer, Entity valueHolder) {
 		try {
@@ -44,12 +44,21 @@ public final class VariableStringUtil {
 		}
 	}
 
+	private static String readStringWhileMatches(StringReader reader, Pattern pattern) throws CommandSyntaxException {
+		final StringBuffer result = new StringBuffer();
+		
+		while (pattern.matcher(result.toString() + reader.peek()).matches())
+			result.append(reader.read());
+
+		return result.toString();
+	}
+
 	private static String parseOriginsMathInterpolation(StringReader reader, VariableSerializer variableSerializer, Entity valueHolder) throws CommandSyntaxException {
 		reader.expect(':');
 
-		final String variable = reader.readStringUntil(' ');
+		final String variable = readStringWhileMatches(reader, VariableSerializer.VARIABLE_REGEX);
 
-		VariableStringUtil.validateVariable(variable, variableSerializer);
+		VariableStringUtil.validateVariable(variable, reader, variableSerializer);
 
 		return String.valueOf(variableSerializer.getVariableValue(variable, valueHolder));
 	}
@@ -65,7 +74,7 @@ public final class VariableStringUtil {
 
 		final String variable = matcher.group(1);
 
-		VariableStringUtil.validateVariable(variable, variableSerializer);
+		VariableStringUtil.validateVariable(variable, reader, variableSerializer);
 
 		if (matcher.group(3) != null) {
 			final int precision = Integer.parseInt(matcher.group(3));
@@ -79,7 +88,13 @@ public final class VariableStringUtil {
 			: String.valueOf(variableSerializer.getVariableValue(variable, valueHolder));
 	}
 
-	private static void validateVariable(String variableName, VariableSerializer variableSerializer) {
+	private static void validateVariable(String variableName, StringReader reader, VariableSerializer variableSerializer) {
+		if (variableName.isEmpty()) {
+			final String varString = reader.getString().substring(reader.getCursor() - 5);
+
+			throw new VariableStringParseException("No variable can be determined at point: " + varString.substring(0, 5) + "<here>" + varString.substring(5));
+		}
+
 		if (!VariableSerializer.isValidVariableName(variableName)) 
 			throw new VariableStringParseException("Invalid variable name: " + variableName);
 

@@ -6,6 +6,7 @@
 		"ActionFactoryAccessor",
 		"BiomeAccessor",
 		"ConditionFactoryAccessor",
+		"DataCommandAccess",
 		"LivingEntityMixin",
 		"PlayerEntityMixin",
 		"PowerFactoryAccessor",

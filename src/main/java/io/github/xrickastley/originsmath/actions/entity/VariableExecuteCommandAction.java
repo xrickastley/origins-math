@@ -6,6 +6,7 @@ import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataTypes;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.util.VariableSerializer;
+import io.github.xrickastley.originsmath.util.VariableStringUtil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
@@ -38,15 +39,7 @@ public class VariableExecuteCommandAction {
 			entity
 		);
 
-		String commandString = data.getString("command");
-
-		for (String variable : varSerializer.getVariableMap().keySet()) {
-			int value = varSerializer.getVariableValue(variable, entity);
-			
-			commandString = commandString
-				.replace(String.format("$:%s", variable), String.valueOf(value))
-				.replace(String.format("${%s}", variable), String.valueOf(value));
-		}
+		final String commandString = VariableStringUtil.parse(data.getString("command"), varSerializer, entity);
 
 		server
 			.getCommandManager()

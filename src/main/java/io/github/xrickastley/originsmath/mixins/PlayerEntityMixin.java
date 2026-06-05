@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.apoli.util.modifier.Modifier;
 import io.github.apace100.apoli.util.modifier.ModifierUtil;
-import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.powers.DamageDealtLinkedResourcePower;
 import io.github.xrickastley.originsmath.powers.DamageTakenLinkedResourcePower;
 
@@ -52,8 +51,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 			.<Modifier>mapMulti((power, consumer) -> power.getModifiers().forEach(consumer))
 			.toList();
 
-		OriginsMath.LOGGER.info("DMG Dealt Modifiers: {}", dmgDealtModifiers);
-
 		double finalAmount = ModifierUtil.applyModifiers(source.getAttacker(), dmgDealtModifiers, amount.get());
 
 		final List<Modifier> dmgTakenModifiers = dmgTakenLinked
@@ -61,11 +58,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 			.<Modifier>mapMulti((power, consumer) -> power.getModifiers().forEach(consumer))
 			.toList();
 
-		OriginsMath.LOGGER.info("DMG Taken Modifiers: {}", dmgTakenModifiers);
-
 		finalAmount = ModifierUtil.applyModifiers(this, dmgTakenModifiers, finalAmount);
-
-		OriginsMath.LOGGER.info("Final amount: {}", finalAmount);
 
 		amount.set((float) finalAmount);
 	}

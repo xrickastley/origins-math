@@ -29,6 +29,7 @@ public class OriginsMathPowers {
 		register(ScoreboardLinkedResourcePower::createFactory);
 		register(SimpleModifyingPower::createFactory);
 		register(StatusEffectLinkedResourcePower::createFactory);
+		register(VariableNbtLinkedResourcePower::createFactory);
 
 		OriginsMath
 			.sublogger(OriginsMathPowers.class)

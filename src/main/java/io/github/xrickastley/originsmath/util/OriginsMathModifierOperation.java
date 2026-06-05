@@ -98,9 +98,11 @@ public enum OriginsMathModifierOperation implements IModifierOperation {
 					}
 
 					return value;
-			})
-			.collect(Collectors.toList()),
-		base, current);
+				})
+				.collect(Collectors.toList()),
+			base, 
+			current
+		);
 	}
 
 	public static void register() {

@@ -10,6 +10,7 @@ import io.github.xrickastley.originsmath.factories.OriginsMathBientityActions;
 import io.github.xrickastley.originsmath.factories.OriginsMathCommands;
 import io.github.xrickastley.originsmath.factories.OriginsMathEntityActions;
 import io.github.xrickastley.originsmath.factories.OriginsMathEntityConditions;
+import io.github.xrickastley.originsmath.factories.OriginsMathMetaActions;
 import io.github.xrickastley.originsmath.factories.OriginsMathPowers;
 import io.github.xrickastley.originsmath.util.CustomHudRenderInjector;
 import io.github.xrickastley.originsmath.util.OriginsMathModifierOperation;
@@ -32,6 +33,7 @@ public class OriginsMath implements ModInitializer {
 		OriginsMathCommands.register();
 		OriginsMathEntityActions.register();
 		OriginsMathEntityConditions.register();
+		OriginsMathMetaActions.register();
 		OriginsMathPowers.register();
 		OriginsMathModifierOperation.register();
 		

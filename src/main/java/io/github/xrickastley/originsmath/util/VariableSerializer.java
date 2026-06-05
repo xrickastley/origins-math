@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.mariuszgromada.math.mxparser.Argument;
 
@@ -28,7 +29,8 @@ public class VariableSerializer {
 		VariableSerializer::read,
 		VariableSerializer::write
 	);
-
+	
+	private static final Pattern VARIABLE_REGEX = Pattern.compile("[a-zA-z][a-zA-Z0-9_]*");
 	private final HashMap<String, PowerType<?>> variableMap = new HashMap<>();
 	
 	private static void send(PacketByteBuf packet, VariableSerializer serializer) {
@@ -60,10 +62,12 @@ public class VariableSerializer {
 		if (!(json instanceof final JsonObject jsonObject)) throw new JsonParseException("Expected a JSON Object for argument serializer!");
 
 		for (final Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-			serializer.variableMap.put(
-				entry.getKey(), 
-				ApoliDataTypes.POWER_TYPE.read(entry.getValue())
-			);
+			final String key = entry.getKey();
+
+			if (!VariableSerializer.isValidVariableName(key)) 
+				throw new JsonParseException("Invalid variable name: " + key);
+
+			serializer.variableMap.put(key, ApoliDataTypes.POWER_TYPE.read(entry.getValue()));
 		}
 
 		return serializer;
@@ -82,6 +86,10 @@ public class VariableSerializer {
 		return json;
 	}
 	
+	public static boolean isValidVariableName(final String string) {
+		return VariableSerializer.VARIABLE_REGEX.matcher(string).matches();
+	}
+
 	private VariableSerializer() {}
 	
 	/**

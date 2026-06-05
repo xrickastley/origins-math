@@ -14,6 +14,7 @@ import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.actions.meta.ForRangeAction;
 import io.github.xrickastley.originsmath.actions.meta.WhileAction;
 import io.github.xrickastley.originsmath.util.ClassInstanceUtil;
+
 import net.minecraft.block.pattern.CachedBlockPosition;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;

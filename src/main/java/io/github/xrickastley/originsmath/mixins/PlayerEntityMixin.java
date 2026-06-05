@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.apoli.util.modifier.Modifier;
 import io.github.apace100.apoli.util.modifier.ModifierUtil;
-import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.powers.DamageDealtLinkedResourcePower;
 import io.github.xrickastley.originsmath.powers.DamageTakenLinkedResourcePower;
 

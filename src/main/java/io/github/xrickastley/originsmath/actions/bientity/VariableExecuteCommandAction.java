@@ -6,6 +6,7 @@ import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataTypes;
 import io.github.xrickastley.originsmath.OriginsMath;
 import io.github.xrickastley.originsmath.util.VariableSerializer;
+import io.github.xrickastley.originsmath.util.VariableStringUtil;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
@@ -44,17 +45,9 @@ public class VariableExecuteCommandAction {
 		final String actorSelector = data.getString("actor_selector");
 		final String targetSelector = data.getString("target_selector");
 		
-		String commandString = data.getString("command")
+		final String commandString = VariableStringUtil.parse(data.getString("command"), varSerializer, actor)
 			.replace(actorSelector, actor.getUuid().toString())
 			.replace(targetSelector, target.getUuid().toString());
-
-		for (String variable : varSerializer.getVariableMap().keySet()) {
-			int value = varSerializer.getVariableValue(variable, actor);
-			
-			commandString = commandString
-				.replace(String.format("$:%s", variable), String.valueOf(value))
-				.replace(String.format("${%s}", variable), String.valueOf(value));
-		}
 
 		server
 			.getCommandManager()

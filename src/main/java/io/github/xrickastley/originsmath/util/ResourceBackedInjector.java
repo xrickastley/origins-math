@@ -68,7 +68,7 @@ public class ResourceBackedInjector {
 
 	@ApiStatus.Internal
 	public static <T extends Factory> T applyPossibleFactoryInjection(final Registry<T> factoryRegistry, final T targetFactory) {
-		return Optional.of(ResourceBackedInjector.INJECTIONS.get(factoryRegistry))
+		return Optional.ofNullable(ResourceBackedInjector.INJECTIONS.get(factoryRegistry))
 			.<T>map(transformationFunction -> (T) transformationFunction.apply(ClassInstanceUtil.castInstance(targetFactory), targetFactory.getSerializableData()))
 			.orElse(targetFactory);
 	}

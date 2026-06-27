@@ -2,11 +2,11 @@ package io.github.xrickastley.originsmath.powers;
 
 import java.util.function.Function;
 
+import org.jetbrains.annotations.Nullable;
+
 import io.github.apace100.apoli.power.PowerType;
 
 import net.minecraft.entity.LivingEntity;
-
-import javax.annotation.Nullable;
 
 /**
  * A subclass of {@link LinkedVariableIntPower} used for temporary values that are held

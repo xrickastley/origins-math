@@ -66,7 +66,7 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 			final LineNumberNode callCtx = this.getCallingContext(4);
 
 			return callCtx != null
-				? SerializableDataInstanceMixin.cast(precastResourceBacked(rb, callCtx))
+				? ClassInstanceUtil.castInstance(precastResourceBacked(rb, callCtx))
 				: original;
 		} catch (Exception e) {
 			return original;
@@ -80,7 +80,13 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 		cancellable = true
 	)
 	public <T> void replaceWithOriginsMathHUD(String name, CallbackInfoReturnable<T> cir) {
+		if (!OriginsMathConfig.Experiments.EXTENDED_COMPATIBILITY_THROUGH_ASM.getValue()) return;
+
 		if (!(data.get(name) instanceof HudRender)) return;
+		
+		final StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+		
+		if (this.originsmath$isWriteMethod(stackTrace[5]) || this.originsmath$isWriteMethod(stackTrace[6])) return;
 
 		if (!(data.get("origins-math:" + name) instanceof final OriginsMathHudRender hudRender)) return;
 
@@ -89,9 +95,9 @@ public abstract class SerializableDataInstanceMixin implements SDIEntityInjectio
 		cir.setReturnValue(ClassInstanceUtil.castInstance(hudRender));
 	}
 
-	@SuppressWarnings("unchecked")
-	private static <T> T cast(Object any) {
-		return (T) any;
+	private boolean originsmath$isWriteMethod(StackTraceElement element) {
+		return element.getClassName().equals("io.github.apace100.calio.data.SerializableData")
+			&& element.getMethodName().equals("write");
 	}
 
 	/**

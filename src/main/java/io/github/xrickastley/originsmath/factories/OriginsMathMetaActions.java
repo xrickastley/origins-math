@@ -18,6 +18,7 @@ import io.github.xrickastley.originsmath.util.ResourceBackedInjector;
 
 import net.minecraft.block.pattern.CachedBlockPosition;
 import net.minecraft.entity.Entity;
+import net.minecraft.inventory.StackReference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Pair;
@@ -132,12 +133,13 @@ public class OriginsMathMetaActions {
 				ApoliDataTypes.ENTITY_CONDITIONS, 
 				ApoliRegistries.ENTITY_ACTION
 			),
-			new MetaActionContext<Pair<World, ItemStack>, Pair<World, ItemStack>>(
+			new MetaActionContext<Pair<World, StackReference>, Pair<World, ItemStack>>(
 				ApoliDataTypes.ITEM_ACTION, 
 				ApoliDataTypes.ITEM_CONDITION, 
 				ApoliDataTypes.ITEM_ACTIONS, 
 				ApoliDataTypes.ITEM_CONDITIONS, 
-				ApoliRegistries.ITEM_ACTION
+				ApoliRegistries.ITEM_ACTION,
+				t -> new Pair<>(t.getLeft(), t.getRight().get())
 			)
 		);
 	}
